@@ -1,0 +1,206 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Auth (Better-Auth) ───────────────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  image         String?
+  role          String   @default("VIEWER") // "ADMIN" | "VIEWER"
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sessions Session[]
+  accounts Account[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  userId                String
+  accountId             String
+  providerId            String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+// ─── Portfolio ────────────────────────────────────────────────────────────────
+
+model Project {
+  id           String   @id @default(cuid())
+  title        String
+  description  String
+  serviceType  String   // matches Service.label from lib/services.ts
+  city         String   @default("")
+  neighborhood String?
+  serviceDate  DateTime @default(now())
+  images       String   // JSON array de URLs
+  tags         String   // JSON array de strings
+  reviewAuthor String?
+  reviewRating Int?     // 1-5
+  reviewText   String?
+  published    Boolean  @default(false)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Cliente que encargó el trabajo (opcional)
+  clientId String?
+  client   Client? @relation(fields: [clientId], references: [id], onDelete: SetNull)
+
+  // Servicio interno del que nació este proyecto de portafolio (opcional, 1:1)
+  serviceRecordId String?       @unique
+  serviceRecord   ServiceRecord? @relation(fields: [serviceRecordId], references: [id], onDelete: SetNull)
+}
+
+// ─── CRM ─────────────────────────────────────────────────────────────────────
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  address   String?
+  city      String?
+  notes     String?
+  source    String   @default("manual") // "landing" | "phone" | "manual" | "referral"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Lead que originó este cliente (único — un lead se convierte una sola vez)
+  leadId String? @unique
+  lead   Lead?   @relation(fields: [leadId], references: [id], onDelete: SetNull)
+
+  // Relaciones
+  projects       Project[]
+  serviceRecords ServiceRecord[]
+  reminders      Reminder[]
+}
+
+// Un ServiceRecord es la unidad de trabajo realizado para un cliente.
+// Internamente rastrea seguimiento/recordatorios.
+// Externamente puede promoverse a un Project de portafolio (campo project).
+model ServiceRecord {
+  id             String    @id @default(cuid())
+  clientId       String
+  type           String    // "INSTALLATION" | "MAINTENANCE" | "REPAIR"
+  status         String    @default("COMPLETED") // "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+  serviceDate    DateTime
+  equipmentBrand String?
+  equipmentModel String?
+  notes          String?
+  amount         Float?    // costo del servicio (opcional)
+  followUpDays   Int       @default(180)
+  followUpDate   DateTime
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  client    Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  reminders Reminder[]
+  project   Project?   // si se promovió a portafolio (back-reference de Project.serviceRecordId)
+}
+
+model Reminder {
+  id              String   @id @default(cuid())
+  clientId        String
+  serviceRecordId String
+  dueDate         DateTime
+  message         String
+  status          String   @default("PENDING") // "PENDING" | "DISMISSED" | "DONE"
+  createdAt       DateTime @default(now())
+
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  serviceRecord ServiceRecord @relation(fields: [serviceRecordId], references: [id], onDelete: Cascade)
+}
+
+// ─── Google Ads ───────────────────────────────────────────────────────────────
+
+model AdCampaign {
+  id               String   @id @default(cuid())
+  googleCampaignId String   @unique
+  name             String
+  status           String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  metrics AdMetric[]
+}
+
+model AdMetric {
+  id          String   @id @default(cuid())
+  campaignId  String
+  date        DateTime
+  impressions Int      @default(0)
+  clicks      Int      @default(0)
+  costMicros  Int      @default(0) // dividir /1_000_000 para obtener USD
+  conversions Float    @default(0)
+
+  campaign AdCampaign @relation(fields: [campaignId], references: [id])
+
+  @@unique([campaignId, date])
+}
+
+model OAuthToken {
+  id           String   @id @default(cuid())
+  provider     String   @unique // "google-ads"
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  updatedAt    DateTime @updatedAt
+}
+
+// ─── Leads ────────────────────────────────────────────────────────────────────
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  service   String   // matches Service.label from lib/services.ts
+  message   String?
+  status    String   @default("NEW") // "NEW" | "CONTACTED" | "QUOTED" | "WON" | "LOST"
+  source    String   @default("landing") // "landing" | "phone" | "manual"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  client Client?
+}
