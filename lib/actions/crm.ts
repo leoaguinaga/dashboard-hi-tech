@@ -5,6 +5,15 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { addDays } from "date-fns"
 
+/** Revalida todas las vistas que dependen de los datos del CRM. */
+function revalidateCRM(clientId?: string) {
+  if (clientId) revalidatePath(`/crm/clientes/${clientId}`)
+  revalidatePath("/crm/clientes")
+  revalidatePath("/crm/seguimientos")
+  revalidatePath("/crm")
+  revalidatePath("/")
+}
+
 /* ─── Client ────────────────────────────────────────────────────────────── */
 
 export async function createClient(formData: FormData) {
@@ -45,6 +54,7 @@ export async function createServiceRecord(formData: FormData) {
   const clientId       = formData.get("clientId")       as string
   const type           = formData.get("type")           as string
   const status         = (formData.get("status") as string) || "COMPLETED"
+  const paymentStatus  = (formData.get("paymentStatus") as string) || "PAID"
   const serviceDateRaw = formData.get("serviceDate")    as string
   // Noon UTC to avoid off-by-one from timezone shifts on date-only inputs
   const serviceDate    = new Date(serviceDateRaw + "T12:00:00")
@@ -57,7 +67,7 @@ export async function createServiceRecord(formData: FormData) {
   const followUpDate   = addDays(serviceDate, followUpDays)
 
   const record = await prisma.serviceRecord.create({
-    data: { clientId, type, status, serviceDate, equipmentBrand, equipmentModel, notes, amount, followUpDays, followUpDate },
+    data: { clientId, type, status, paymentStatus, serviceDate, equipmentBrand, equipmentModel, notes, amount, followUpDays, followUpDate },
   })
 
   const label = [equipmentBrand, equipmentModel].filter(Boolean).join(" ")
@@ -71,18 +81,85 @@ export async function createServiceRecord(formData: FormData) {
     },
   })
 
-  revalidatePath(`/crm/clientes/${clientId}`)
-  revalidatePath("/crm/seguimientos")
-  revalidatePath("/crm")
-  revalidatePath("/")
+  revalidateCRM(clientId)
+}
+
+export async function updateServiceRecord(id: string, formData: FormData) {
+  const type           = formData.get("type")           as string
+  const status         = (formData.get("status") as string) || "COMPLETED"
+  const paymentStatus  = (formData.get("paymentStatus") as string) || "PAID"
+  const serviceDateRaw = formData.get("serviceDate")    as string
+  const serviceDate    = new Date(serviceDateRaw + "T12:00:00")
+  const equipmentBrand = (formData.get("equipmentBrand") as string)?.trim() || null
+  const equipmentModel = (formData.get("equipmentModel") as string)?.trim() || null
+  const notes          = (formData.get("notes")          as string)?.trim() || null
+  const amountRaw      = formData.get("amount") as string | null
+  const amount         = amountRaw ? parseFloat(amountRaw) : null
+
+  const record = await prisma.serviceRecord.update({
+    where: { id },
+    data:  { type, status, paymentStatus, serviceDate, equipmentBrand, equipmentModel, notes, amount },
+  })
+
+  revalidateCRM(record.clientId)
+}
+
+export async function deleteServiceRecord(id: string) {
+  const record = await prisma.serviceRecord.delete({ where: { id } })
+  revalidateCRM(record.clientId)
+}
+
+export async function setServicePaymentStatus(id: string, paymentStatus: "PAID" | "PENDING") {
+  const record = await prisma.serviceRecord.update({
+    where: { id },
+    data:  { paymentStatus },
+  })
+  revalidateCRM(record.clientId)
+  revalidatePath("/services")
 }
 
 /* ─── Reminder ──────────────────────────────────────────────────────────── */
 
 export async function updateReminderStatus(id: string, status: "DONE" | "DISMISSED") {
-  await prisma.reminder.update({ where: { id }, data: { status } })
+  const reminder = await prisma.reminder.update({ where: { id }, data: { status } })
+  revalidateCRM(reminder.clientId)
+}
 
-  revalidatePath("/crm/seguimientos")
-  revalidatePath("/crm")
-  revalidatePath("/")
+export async function rescheduleReminder(id: string, newDate: string) {
+  // Noon to avoid timezone off-by-one on date-only inputs
+  const dueDate  = new Date(newDate + "T12:00:00")
+  const reminder = await prisma.reminder.update({
+    where: { id },
+    data:  { dueDate, status: "PENDING" },
+  })
+  revalidateCRM(reminder.clientId)
+}
+
+export async function createReminder(formData: FormData) {
+  const clientId   = formData.get("clientId") as string
+  const message    = (formData.get("message") as string).trim()
+  const dueDateRaw = formData.get("dueDate")  as string
+  const dueDate    = new Date(dueDateRaw + "T12:00:00")
+
+  await prisma.reminder.create({
+    data: { clientId, message, dueDate, status: "PENDING" },
+  })
+  revalidateCRM(clientId)
+}
+
+/* ─── Interactions (bitácora de contacto) ───────────────────────────────── */
+
+export async function createInteraction(formData: FormData) {
+  const clientId = formData.get("clientId") as string
+  const type     = (formData.get("type") as string) || "NOTE"
+  const note     = (formData.get("note") as string).trim()
+  if (!note) return
+
+  await prisma.interaction.create({ data: { clientId, type, note } })
+  revalidatePath(`/crm/clientes/${clientId}`)
+}
+
+export async function deleteInteraction(id: string) {
+  const interaction = await prisma.interaction.delete({ where: { id } })
+  revalidatePath(`/crm/clientes/${interaction.clientId}`)
 }

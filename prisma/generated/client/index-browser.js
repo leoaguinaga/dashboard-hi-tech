@@ -212,6 +212,7 @@ exports.Prisma.ServiceRecordScalarFieldEnum = {
   equipmentModel: 'equipmentModel',
   notes: 'notes',
   amount: 'amount',
+  paymentStatus: 'paymentStatus',
   followUpDays: 'followUpDays',
   followUpDate: 'followUpDate',
   createdAt: 'createdAt',
@@ -225,6 +226,14 @@ exports.Prisma.ReminderScalarFieldEnum = {
   dueDate: 'dueDate',
   message: 'message',
   status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InteractionScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
+  type: 'type',
+  note: 'note',
   createdAt: 'createdAt'
 };
 
@@ -294,6 +303,7 @@ exports.Prisma.ModelName = {
   Client: 'Client',
   ServiceRecord: 'ServiceRecord',
   Reminder: 'Reminder',
+  Interaction: 'Interaction',
   AdCampaign: 'AdCampaign',
   AdMetric: 'AdMetric',
   OAuthToken: 'OAuthToken',

@@ -101,15 +101,21 @@ export default async function SeguimientosPage({ searchParams }: Props) {
                 </td>
 
                 <td className="px-3 py-2.5 hidden sm:table-cell">
-                  <span className="text-xs">
-                    {SERVICE_LABELS[r.serviceRecord.type] ?? r.serviceRecord.type}
-                  </span>
-                  {(r.serviceRecord.equipmentBrand || r.serviceRecord.equipmentModel) && (
-                    <p className="text-[11px] text-app-muted">
-                      {[r.serviceRecord.equipmentBrand, r.serviceRecord.equipmentModel]
-                        .filter(Boolean)
-                        .join(" ")}
-                    </p>
+                  {r.serviceRecord ? (
+                    <>
+                      <span className="text-xs">
+                        {SERVICE_LABELS[r.serviceRecord.type] ?? r.serviceRecord.type}
+                      </span>
+                      {(r.serviceRecord.equipmentBrand || r.serviceRecord.equipmentModel) && (
+                        <p className="text-[11px] text-app-muted">
+                          {[r.serviceRecord.equipmentBrand, r.serviceRecord.equipmentModel]
+                            .filter(Boolean)
+                            .join(" ")}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <span className="text-[11px] text-app-muted/60">Recordatorio manual</span>
                   )}
                 </td>
 

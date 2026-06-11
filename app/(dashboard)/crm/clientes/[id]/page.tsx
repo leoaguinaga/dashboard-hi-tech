@@ -9,6 +9,11 @@ import { ReminderBadge }          from "@/components/crm/reminder-badge"
 import { ReminderActions }        from "@/components/crm/reminder-actions"
 import { AddServiceRecordDialog }    from "@/components/crm/add-service-record-dialog"
 import { PromoteToPortfolioButton } from "@/components/crm/promote-to-portfolio-button"
+import { WhatsAppButton }         from "@/components/crm/whatsapp-button"
+import { PaymentStatusToggle }    from "@/components/crm/payment-status-toggle"
+import { ServiceRecordActions }   from "@/components/crm/service-record-actions"
+import { AddReminderDialog }      from "@/components/crm/add-reminder-dialog"
+import { InteractionLog }         from "@/components/crm/interaction-log"
 
 interface Props {
   params: Promise<{ id: string }>
@@ -42,10 +47,14 @@ export default async function ClientProfilePage({ params }: Props) {
         orderBy: { dueDate: "asc" },
         include: { serviceRecord: { select: { type: true } } },
       },
+      interactions: { orderBy: { createdAt: "desc" } },
     },
   })
 
   if (!client) notFound()
+
+  // Mensaje base prellenado para WhatsApp
+  const waMessage = `Hola ${client.name.split(" ")[0]}, le escribimos de Hi-Tech HVAC. `
 
   const pendingReminders = client.reminders.filter((r) => r.status === "PENDING")
   const pastReminders    = client.reminders.filter((r) => r.status !== "PENDING")
@@ -80,7 +89,10 @@ export default async function ClientProfilePage({ params }: Props) {
               </Link>
             )}
           </div>
-          <AddServiceRecordDialog clientId={client.id} />
+          <div className="flex items-center gap-2">
+            <WhatsAppButton phone={client.phone} message={waMessage} />
+            <AddServiceRecordDialog clientId={client.id} />
+          </div>
         </div>
       </div>
 
@@ -91,9 +103,12 @@ export default async function ClientProfilePage({ params }: Props) {
           <div className="rounded-lg border border-border p-4 bg-bg-base space-y-2.5">
             <h2 className="text-xs font-semibold text-app-muted uppercase tracking-wide">Contacto</h2>
 
-            <div className="flex items-center gap-2 text-sm">
-              <Phone className="h-3.5 w-3.5 text-app-muted shrink-0" />
-              <span>{client.phone}</span>
+            <div className="flex items-center justify-between gap-2 text-sm">
+              <div className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5 text-app-muted shrink-0" />
+                <a href={`tel:${client.phone}`} className="hover:text-brand-primary">{client.phone}</a>
+              </div>
+              <WhatsAppButton phone={client.phone} message={waMessage} variant="icon" />
             </div>
 
             {client.email && (
@@ -131,6 +146,9 @@ export default async function ClientProfilePage({ params }: Props) {
                   {pendingReminders.length}
                 </span>
               )}
+              <div className="ml-auto">
+                <AddReminderDialog clientId={client.id} />
+              </div>
             </div>
 
             {pendingReminders.length === 0 ? (
@@ -182,7 +200,9 @@ export default async function ClientProfilePage({ params }: Props) {
                     <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden sm:table-cell">Estado</th>
                     <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden md:table-cell">Equipo</th>
                     <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden lg:table-cell">Costo</th>
+                    <th className="px-3 py-2 text-left text-xs font-medium text-app-muted">Cobro</th>
                     <th className="px-3 py-2 text-right text-xs font-medium text-app-muted">Portafolio</th>
+                    <th className="px-3 py-2 text-right text-xs font-medium text-app-muted"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -209,12 +229,32 @@ export default async function ClientProfilePage({ params }: Props) {
                         <td className="px-3 py-2.5 text-xs text-app-muted hidden lg:table-cell">
                           {sr.amount != null ? `$${sr.amount.toLocaleString("en-US", { minimumFractionDigits: 0 })}` : "—"}
                         </td>
+                        <td className="px-3 py-2.5">
+                          {sr.amount != null
+                            ? <PaymentStatusToggle id={sr.id} paymentStatus={sr.paymentStatus} />
+                            : <span className="text-[11px] text-app-muted/50">—</span>}
+                        </td>
                         <td className="px-3 py-2.5 text-right">
                           <PromoteToPortfolioButton
                             serviceRecordId={sr.id}
                             clientId={client.id}
                             projectId={sr.project?.id}
                             projectTitle={sr.project?.title}
+                          />
+                        </td>
+                        <td className="px-3 py-2.5 text-right">
+                          <ServiceRecordActions
+                            record={{
+                              id:             sr.id,
+                              type:           sr.type,
+                              status:         sr.status,
+                              paymentStatus:  sr.paymentStatus,
+                              serviceDate:    sr.serviceDate,
+                              equipmentBrand: sr.equipmentBrand,
+                              equipmentModel: sr.equipmentModel,
+                              amount:         sr.amount,
+                              notes:          sr.notes,
+                            }}
                           />
                         </td>
                       </tr>
@@ -224,6 +264,17 @@ export default async function ClientProfilePage({ params }: Props) {
               </table>
             )}
           </div>
+
+          {/* Interaction log */}
+          <InteractionLog
+            clientId={client.id}
+            interactions={client.interactions.map((it) => ({
+              id:        it.id,
+              type:      it.type,
+              note:      it.note,
+              createdAt: it.createdAt,
+            }))}
+          />
 
           {/* Past reminders */}
           {pastReminders.length > 0 && (

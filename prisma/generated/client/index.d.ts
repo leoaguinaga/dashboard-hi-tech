@@ -54,6 +54,11 @@ export type ServiceRecord = $Result.DefaultSelection<Prisma.$ServiceRecordPayloa
  */
 export type Reminder = $Result.DefaultSelection<Prisma.$ReminderPayload>
 /**
+ * Model Interaction
+ * 
+ */
+export type Interaction = $Result.DefaultSelection<Prisma.$InteractionPayload>
+/**
  * Model AdCampaign
  * 
  */
@@ -274,6 +279,16 @@ export class PrismaClient<
     * ```
     */
   get reminder(): Prisma.ReminderDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.interaction`: Exposes CRUD operations for the **Interaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Interactions
+    * const interactions = await prisma.interaction.findMany()
+    * ```
+    */
+  get interaction(): Prisma.InteractionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.adCampaign`: Exposes CRUD operations for the **AdCampaign** model.
@@ -756,6 +771,7 @@ export namespace Prisma {
     Client: 'Client',
     ServiceRecord: 'ServiceRecord',
     Reminder: 'Reminder',
+    Interaction: 'Interaction',
     AdCampaign: 'AdCampaign',
     AdMetric: 'AdMetric',
     OAuthToken: 'OAuthToken',
@@ -775,7 +791,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "session" | "account" | "verification" | "project" | "client" | "serviceRecord" | "reminder" | "adCampaign" | "adMetric" | "oAuthToken" | "lead"
+      modelProps: "user" | "session" | "account" | "verification" | "project" | "client" | "serviceRecord" | "reminder" | "interaction" | "adCampaign" | "adMetric" | "oAuthToken" | "lead"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1371,6 +1387,80 @@ export namespace Prisma {
           }
         }
       }
+      Interaction: {
+        payload: Prisma.$InteractionPayload<ExtArgs>
+        fields: Prisma.InteractionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InteractionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InteractionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          findFirst: {
+            args: Prisma.InteractionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InteractionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          findMany: {
+            args: Prisma.InteractionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          create: {
+            args: Prisma.InteractionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          createMany: {
+            args: Prisma.InteractionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InteractionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          delete: {
+            args: Prisma.InteractionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          update: {
+            args: Prisma.InteractionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          deleteMany: {
+            args: Prisma.InteractionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InteractionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InteractionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>[]
+          }
+          upsert: {
+            args: Prisma.InteractionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InteractionPayload>
+          }
+          aggregate: {
+            args: Prisma.InteractionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInteraction>
+          }
+          groupBy: {
+            args: Prisma.InteractionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InteractionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InteractionCountArgs<ExtArgs>
+            result: $Utils.Optional<InteractionCountAggregateOutputType> | number
+          }
+        }
+      }
       AdCampaign: {
         payload: Prisma.$AdCampaignPayload<ExtArgs>
         fields: Prisma.AdCampaignFieldRefs
@@ -1783,6 +1873,7 @@ export namespace Prisma {
     client?: ClientOmit
     serviceRecord?: ServiceRecordOmit
     reminder?: ReminderOmit
+    interaction?: InteractionOmit
     adCampaign?: AdCampaignOmit
     adMetric?: AdMetricOmit
     oAuthToken?: OAuthTokenOmit
@@ -1910,12 +2001,14 @@ export namespace Prisma {
     projects: number
     serviceRecords: number
     reminders: number
+    interactions: number
   }
 
   export type ClientCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     projects?: boolean | ClientCountOutputTypeCountProjectsArgs
     serviceRecords?: boolean | ClientCountOutputTypeCountServiceRecordsArgs
     reminders?: boolean | ClientCountOutputTypeCountRemindersArgs
+    interactions?: boolean | ClientCountOutputTypeCountInteractionsArgs
   }
 
   // Custom InputTypes
@@ -1948,6 +2041,13 @@ export namespace Prisma {
    */
   export type ClientCountOutputTypeCountRemindersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ReminderWhereInput
+  }
+
+  /**
+   * ClientCountOutputType without action
+   */
+  export type ClientCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
   }
 
 
@@ -7973,6 +8073,7 @@ export namespace Prisma {
     projects?: boolean | Client$projectsArgs<ExtArgs>
     serviceRecords?: boolean | Client$serviceRecordsArgs<ExtArgs>
     reminders?: boolean | Client$remindersArgs<ExtArgs>
+    interactions?: boolean | Client$interactionsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["client"]>
 
@@ -8026,6 +8127,7 @@ export namespace Prisma {
     projects?: boolean | Client$projectsArgs<ExtArgs>
     serviceRecords?: boolean | Client$serviceRecordsArgs<ExtArgs>
     reminders?: boolean | Client$remindersArgs<ExtArgs>
+    interactions?: boolean | Client$interactionsArgs<ExtArgs>
     _count?: boolean | ClientCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ClientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8042,6 +8144,7 @@ export namespace Prisma {
       projects: Prisma.$ProjectPayload<ExtArgs>[]
       serviceRecords: Prisma.$ServiceRecordPayload<ExtArgs>[]
       reminders: Prisma.$ReminderPayload<ExtArgs>[]
+      interactions: Prisma.$InteractionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8453,6 +8556,7 @@ export namespace Prisma {
     projects<T extends Client$projectsArgs<ExtArgs> = {}>(args?: Subset<T, Client$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     serviceRecords<T extends Client$serviceRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Client$serviceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ServiceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reminders<T extends Client$remindersArgs<ExtArgs> = {}>(args?: Subset<T, Client$remindersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReminderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    interactions<T extends Client$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, Client$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8985,6 +9089,30 @@ export namespace Prisma {
   }
 
   /**
+   * Client.interactions
+   */
+  export type Client$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    cursor?: InteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
    * Client without action
    */
   export type ClientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9035,6 +9163,7 @@ export namespace Prisma {
     equipmentModel: string | null
     notes: string | null
     amount: number | null
+    paymentStatus: string | null
     followUpDays: number | null
     followUpDate: Date | null
     createdAt: Date | null
@@ -9051,6 +9180,7 @@ export namespace Prisma {
     equipmentModel: string | null
     notes: string | null
     amount: number | null
+    paymentStatus: string | null
     followUpDays: number | null
     followUpDate: Date | null
     createdAt: Date | null
@@ -9067,6 +9197,7 @@ export namespace Prisma {
     equipmentModel: number
     notes: number
     amount: number
+    paymentStatus: number
     followUpDays: number
     followUpDate: number
     createdAt: number
@@ -9095,6 +9226,7 @@ export namespace Prisma {
     equipmentModel?: true
     notes?: true
     amount?: true
+    paymentStatus?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9111,6 +9243,7 @@ export namespace Prisma {
     equipmentModel?: true
     notes?: true
     amount?: true
+    paymentStatus?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9127,6 +9260,7 @@ export namespace Prisma {
     equipmentModel?: true
     notes?: true
     amount?: true
+    paymentStatus?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9230,6 +9364,7 @@ export namespace Prisma {
     equipmentModel: string | null
     notes: string | null
     amount: number | null
+    paymentStatus: string
     followUpDays: number
     followUpDate: Date
     createdAt: Date
@@ -9265,6 +9400,7 @@ export namespace Prisma {
     equipmentModel?: boolean
     notes?: boolean
     amount?: boolean
+    paymentStatus?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9285,6 +9421,7 @@ export namespace Prisma {
     equipmentModel?: boolean
     notes?: boolean
     amount?: boolean
+    paymentStatus?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9302,6 +9439,7 @@ export namespace Prisma {
     equipmentModel?: boolean
     notes?: boolean
     amount?: boolean
+    paymentStatus?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9319,13 +9457,14 @@ export namespace Prisma {
     equipmentModel?: boolean
     notes?: boolean
     amount?: boolean
+    paymentStatus?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ServiceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "type" | "status" | "serviceDate" | "equipmentBrand" | "equipmentModel" | "notes" | "amount" | "followUpDays" | "followUpDate" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRecord"]>
+  export type ServiceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "type" | "status" | "serviceDate" | "equipmentBrand" | "equipmentModel" | "notes" | "amount" | "paymentStatus" | "followUpDays" | "followUpDate" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRecord"]>
   export type ServiceRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
     reminders?: boolean | ServiceRecord$remindersArgs<ExtArgs>
@@ -9356,6 +9495,7 @@ export namespace Prisma {
       equipmentModel: string | null
       notes: string | null
       amount: number | null
+      paymentStatus: string
       followUpDays: number
       followUpDate: Date
       createdAt: Date
@@ -9795,6 +9935,7 @@ export namespace Prisma {
     readonly equipmentModel: FieldRef<"ServiceRecord", 'String'>
     readonly notes: FieldRef<"ServiceRecord", 'String'>
     readonly amount: FieldRef<"ServiceRecord", 'Float'>
+    readonly paymentStatus: FieldRef<"ServiceRecord", 'String'>
     readonly followUpDays: FieldRef<"ServiceRecord", 'Int'>
     readonly followUpDate: FieldRef<"ServiceRecord", 'DateTime'>
     readonly createdAt: FieldRef<"ServiceRecord", 'DateTime'>
@@ -10409,7 +10550,7 @@ export namespace Prisma {
   export type ReminderGroupByOutputType = {
     id: string
     clientId: string
-    serviceRecordId: string
+    serviceRecordId: string | null
     dueDate: Date
     message: string
     status: string
@@ -10442,7 +10583,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }, ExtArgs["result"]["reminder"]>
 
   export type ReminderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10454,7 +10595,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }, ExtArgs["result"]["reminder"]>
 
   export type ReminderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10466,7 +10607,7 @@ export namespace Prisma {
     status?: boolean
     createdAt?: boolean
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }, ExtArgs["result"]["reminder"]>
 
   export type ReminderSelectScalar = {
@@ -10482,27 +10623,27 @@ export namespace Prisma {
   export type ReminderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "serviceRecordId" | "dueDate" | "message" | "status" | "createdAt", ExtArgs["result"]["reminder"]>
   export type ReminderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }
   export type ReminderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }
   export type ReminderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
-    serviceRecord?: boolean | ServiceRecordDefaultArgs<ExtArgs>
+    serviceRecord?: boolean | Reminder$serviceRecordArgs<ExtArgs>
   }
 
   export type $ReminderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Reminder"
     objects: {
       client: Prisma.$ClientPayload<ExtArgs>
-      serviceRecord: Prisma.$ServiceRecordPayload<ExtArgs>
+      serviceRecord: Prisma.$ServiceRecordPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       clientId: string
-      serviceRecordId: string
+      serviceRecordId: string | null
       dueDate: Date
       message: string
       status: string
@@ -10902,7 +11043,7 @@ export namespace Prisma {
   export interface Prisma__ReminderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    serviceRecord<T extends ServiceRecordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ServiceRecordDefaultArgs<ExtArgs>>): Prisma__ServiceRecordClient<$Result.GetResult<Prisma.$ServiceRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    serviceRecord<T extends Reminder$serviceRecordArgs<ExtArgs> = {}>(args?: Subset<T, Reminder$serviceRecordArgs<ExtArgs>>): Prisma__ServiceRecordClient<$Result.GetResult<Prisma.$ServiceRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11340,6 +11481,25 @@ export namespace Prisma {
   }
 
   /**
+   * Reminder.serviceRecord
+   */
+  export type Reminder$serviceRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ServiceRecord
+     */
+    select?: ServiceRecordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ServiceRecord
+     */
+    omit?: ServiceRecordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ServiceRecordInclude<ExtArgs> | null
+    where?: ServiceRecordWhereInput
+  }
+
+  /**
    * Reminder without action
    */
   export type ReminderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11355,6 +11515,1069 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ReminderInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Interaction
+   */
+
+  export type AggregateInteraction = {
+    _count: InteractionCountAggregateOutputType | null
+    _min: InteractionMinAggregateOutputType | null
+    _max: InteractionMaxAggregateOutputType | null
+  }
+
+  export type InteractionMinAggregateOutputType = {
+    id: string | null
+    clientId: string | null
+    type: string | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type InteractionMaxAggregateOutputType = {
+    id: string | null
+    clientId: string | null
+    type: string | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type InteractionCountAggregateOutputType = {
+    id: number
+    clientId: number
+    type: number
+    note: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InteractionMinAggregateInputType = {
+    id?: true
+    clientId?: true
+    type?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type InteractionMaxAggregateInputType = {
+    id?: true
+    clientId?: true
+    type?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type InteractionCountAggregateInputType = {
+    id?: true
+    clientId?: true
+    type?: true
+    note?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InteractionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interaction to aggregate.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Interactions
+    **/
+    _count?: true | InteractionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InteractionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InteractionMaxAggregateInputType
+  }
+
+  export type GetInteractionAggregateType<T extends InteractionAggregateArgs> = {
+        [P in keyof T & keyof AggregateInteraction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInteraction[P]>
+      : GetScalarType<T[P], AggregateInteraction[P]>
+  }
+
+
+
+
+  export type InteractionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InteractionWhereInput
+    orderBy?: InteractionOrderByWithAggregationInput | InteractionOrderByWithAggregationInput[]
+    by: InteractionScalarFieldEnum[] | InteractionScalarFieldEnum
+    having?: InteractionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InteractionCountAggregateInputType | true
+    _min?: InteractionMinAggregateInputType
+    _max?: InteractionMaxAggregateInputType
+  }
+
+  export type InteractionGroupByOutputType = {
+    id: string
+    clientId: string
+    type: string
+    note: string
+    createdAt: Date
+    _count: InteractionCountAggregateOutputType | null
+    _min: InteractionMinAggregateOutputType | null
+    _max: InteractionMaxAggregateOutputType | null
+  }
+
+  type GetInteractionGroupByPayload<T extends InteractionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InteractionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InteractionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InteractionGroupByOutputType[P]>
+            : GetScalarType<T[P], InteractionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InteractionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    type?: boolean
+    note?: boolean
+    createdAt?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    type?: boolean
+    note?: boolean
+    createdAt?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clientId?: boolean
+    type?: boolean
+    note?: boolean
+    createdAt?: boolean
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["interaction"]>
+
+  export type InteractionSelectScalar = {
+    id?: boolean
+    clientId?: boolean
+    type?: boolean
+    note?: boolean
+    createdAt?: boolean
+  }
+
+  export type InteractionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "type" | "note" | "createdAt", ExtArgs["result"]["interaction"]>
+  export type InteractionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }
+  export type InteractionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }
+  export type InteractionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    client?: boolean | ClientDefaultArgs<ExtArgs>
+  }
+
+  export type $InteractionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Interaction"
+    objects: {
+      client: Prisma.$ClientPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      clientId: string
+      type: string
+      note: string
+      createdAt: Date
+    }, ExtArgs["result"]["interaction"]>
+    composites: {}
+  }
+
+  type InteractionGetPayload<S extends boolean | null | undefined | InteractionDefaultArgs> = $Result.GetResult<Prisma.$InteractionPayload, S>
+
+  type InteractionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InteractionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InteractionCountAggregateInputType | true
+    }
+
+  export interface InteractionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Interaction'], meta: { name: 'Interaction' } }
+    /**
+     * Find zero or one Interaction that matches the filter.
+     * @param {InteractionFindUniqueArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InteractionFindUniqueArgs>(args: SelectSubset<T, InteractionFindUniqueArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Interaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InteractionFindUniqueOrThrowArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InteractionFindUniqueOrThrowArgs>(args: SelectSubset<T, InteractionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Interaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindFirstArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InteractionFindFirstArgs>(args?: SelectSubset<T, InteractionFindFirstArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Interaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindFirstOrThrowArgs} args - Arguments to find a Interaction
+     * @example
+     * // Get one Interaction
+     * const interaction = await prisma.interaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InteractionFindFirstOrThrowArgs>(args?: SelectSubset<T, InteractionFindFirstOrThrowArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Interactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Interactions
+     * const interactions = await prisma.interaction.findMany()
+     * 
+     * // Get first 10 Interactions
+     * const interactions = await prisma.interaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const interactionWithIdOnly = await prisma.interaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InteractionFindManyArgs>(args?: SelectSubset<T, InteractionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Interaction.
+     * @param {InteractionCreateArgs} args - Arguments to create a Interaction.
+     * @example
+     * // Create one Interaction
+     * const Interaction = await prisma.interaction.create({
+     *   data: {
+     *     // ... data to create a Interaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends InteractionCreateArgs>(args: SelectSubset<T, InteractionCreateArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Interactions.
+     * @param {InteractionCreateManyArgs} args - Arguments to create many Interactions.
+     * @example
+     * // Create many Interactions
+     * const interaction = await prisma.interaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InteractionCreateManyArgs>(args?: SelectSubset<T, InteractionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Interactions and returns the data saved in the database.
+     * @param {InteractionCreateManyAndReturnArgs} args - Arguments to create many Interactions.
+     * @example
+     * // Create many Interactions
+     * const interaction = await prisma.interaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Interactions and only return the `id`
+     * const interactionWithIdOnly = await prisma.interaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InteractionCreateManyAndReturnArgs>(args?: SelectSubset<T, InteractionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Interaction.
+     * @param {InteractionDeleteArgs} args - Arguments to delete one Interaction.
+     * @example
+     * // Delete one Interaction
+     * const Interaction = await prisma.interaction.delete({
+     *   where: {
+     *     // ... filter to delete one Interaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InteractionDeleteArgs>(args: SelectSubset<T, InteractionDeleteArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Interaction.
+     * @param {InteractionUpdateArgs} args - Arguments to update one Interaction.
+     * @example
+     * // Update one Interaction
+     * const interaction = await prisma.interaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InteractionUpdateArgs>(args: SelectSubset<T, InteractionUpdateArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Interactions.
+     * @param {InteractionDeleteManyArgs} args - Arguments to filter Interactions to delete.
+     * @example
+     * // Delete a few Interactions
+     * const { count } = await prisma.interaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InteractionDeleteManyArgs>(args?: SelectSubset<T, InteractionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Interactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Interactions
+     * const interaction = await prisma.interaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InteractionUpdateManyArgs>(args: SelectSubset<T, InteractionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Interactions and returns the data updated in the database.
+     * @param {InteractionUpdateManyAndReturnArgs} args - Arguments to update many Interactions.
+     * @example
+     * // Update many Interactions
+     * const interaction = await prisma.interaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Interactions and only return the `id`
+     * const interactionWithIdOnly = await prisma.interaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InteractionUpdateManyAndReturnArgs>(args: SelectSubset<T, InteractionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Interaction.
+     * @param {InteractionUpsertArgs} args - Arguments to update or create a Interaction.
+     * @example
+     * // Update or create a Interaction
+     * const interaction = await prisma.interaction.upsert({
+     *   create: {
+     *     // ... data to create a Interaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Interaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InteractionUpsertArgs>(args: SelectSubset<T, InteractionUpsertArgs<ExtArgs>>): Prisma__InteractionClient<$Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Interactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionCountArgs} args - Arguments to filter Interactions to count.
+     * @example
+     * // Count the number of Interactions
+     * const count = await prisma.interaction.count({
+     *   where: {
+     *     // ... the filter for the Interactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends InteractionCountArgs>(
+      args?: Subset<T, InteractionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InteractionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Interaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InteractionAggregateArgs>(args: Subset<T, InteractionAggregateArgs>): Prisma.PrismaPromise<GetInteractionAggregateType<T>>
+
+    /**
+     * Group by Interaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InteractionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InteractionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InteractionGroupByArgs['orderBy'] }
+        : { orderBy?: InteractionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InteractionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInteractionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Interaction model
+   */
+  readonly fields: InteractionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Interaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InteractionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    client<T extends ClientDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClientDefaultArgs<ExtArgs>>): Prisma__ClientClient<$Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Interaction model
+   */
+  interface InteractionFieldRefs {
+    readonly id: FieldRef<"Interaction", 'String'>
+    readonly clientId: FieldRef<"Interaction", 'String'>
+    readonly type: FieldRef<"Interaction", 'String'>
+    readonly note: FieldRef<"Interaction", 'String'>
+    readonly createdAt: FieldRef<"Interaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Interaction findUnique
+   */
+  export type InteractionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction findUniqueOrThrow
+   */
+  export type InteractionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction findFirst
+   */
+  export type InteractionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interactions.
+     */
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction findFirstOrThrow
+   */
+  export type InteractionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interaction to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interactions.
+     */
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction findMany
+   */
+  export type InteractionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which Interactions to fetch.
+     */
+    where?: InteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Interactions to fetch.
+     */
+    orderBy?: InteractionOrderByWithRelationInput | InteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Interactions.
+     */
+    cursor?: InteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Interactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Interactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Interactions.
+     */
+    distinct?: InteractionScalarFieldEnum | InteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Interaction create
+   */
+  export type InteractionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Interaction.
+     */
+    data: XOR<InteractionCreateInput, InteractionUncheckedCreateInput>
+  }
+
+  /**
+   * Interaction createMany
+   */
+  export type InteractionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Interactions.
+     */
+    data: InteractionCreateManyInput | InteractionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Interaction createManyAndReturn
+   */
+  export type InteractionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Interactions.
+     */
+    data: InteractionCreateManyInput | InteractionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Interaction update
+   */
+  export type InteractionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Interaction.
+     */
+    data: XOR<InteractionUpdateInput, InteractionUncheckedUpdateInput>
+    /**
+     * Choose, which Interaction to update.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction updateMany
+   */
+  export type InteractionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Interactions.
+     */
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which Interactions to update
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Interaction updateManyAndReturn
+   */
+  export type InteractionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * The data used to update Interactions.
+     */
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which Interactions to update
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Interaction upsert
+   */
+  export type InteractionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Interaction to update in case it exists.
+     */
+    where: InteractionWhereUniqueInput
+    /**
+     * In case the Interaction found by the `where` argument doesn't exist, create a new Interaction with this data.
+     */
+    create: XOR<InteractionCreateInput, InteractionUncheckedCreateInput>
+    /**
+     * In case the Interaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InteractionUpdateInput, InteractionUncheckedUpdateInput>
+  }
+
+  /**
+   * Interaction delete
+   */
+  export type InteractionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
+    /**
+     * Filter which Interaction to delete.
+     */
+    where: InteractionWhereUniqueInput
+  }
+
+  /**
+   * Interaction deleteMany
+   */
+  export type InteractionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Interactions to delete
+     */
+    where?: InteractionWhereInput
+    /**
+     * Limit how many Interactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Interaction without action
+   */
+  export type InteractionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Interaction
+     */
+    select?: InteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Interaction
+     */
+    omit?: InteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InteractionInclude<ExtArgs> | null
   }
 
 
@@ -15851,6 +17074,7 @@ export namespace Prisma {
     equipmentModel: 'equipmentModel',
     notes: 'notes',
     amount: 'amount',
+    paymentStatus: 'paymentStatus',
     followUpDays: 'followUpDays',
     followUpDate: 'followUpDate',
     createdAt: 'createdAt',
@@ -15871,6 +17095,17 @@ export namespace Prisma {
   };
 
   export type ReminderScalarFieldEnum = (typeof ReminderScalarFieldEnum)[keyof typeof ReminderScalarFieldEnum]
+
+
+  export const InteractionScalarFieldEnum: {
+    id: 'id',
+    clientId: 'clientId',
+    type: 'type',
+    note: 'note',
+    createdAt: 'createdAt'
+  };
+
+  export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[keyof typeof InteractionScalarFieldEnum]
 
 
   export const AdCampaignScalarFieldEnum: {
@@ -16460,6 +17695,7 @@ export namespace Prisma {
     projects?: ProjectListRelationFilter
     serviceRecords?: ServiceRecordListRelationFilter
     reminders?: ReminderListRelationFilter
+    interactions?: InteractionListRelationFilter
   }
 
   export type ClientOrderByWithRelationInput = {
@@ -16478,6 +17714,7 @@ export namespace Prisma {
     projects?: ProjectOrderByRelationAggregateInput
     serviceRecords?: ServiceRecordOrderByRelationAggregateInput
     reminders?: ReminderOrderByRelationAggregateInput
+    interactions?: InteractionOrderByRelationAggregateInput
   }
 
   export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -16499,6 +17736,7 @@ export namespace Prisma {
     projects?: ProjectListRelationFilter
     serviceRecords?: ServiceRecordListRelationFilter
     reminders?: ReminderListRelationFilter
+    interactions?: InteractionListRelationFilter
   }, "id" | "leadId">
 
   export type ClientOrderByWithAggregationInput = {
@@ -16548,6 +17786,7 @@ export namespace Prisma {
     equipmentModel?: StringNullableFilter<"ServiceRecord"> | string | null
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
+    paymentStatus?: StringFilter<"ServiceRecord"> | string
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -16567,6 +17806,7 @@ export namespace Prisma {
     equipmentModel?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     amount?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -16589,6 +17829,7 @@ export namespace Prisma {
     equipmentModel?: StringNullableFilter<"ServiceRecord"> | string | null
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
+    paymentStatus?: StringFilter<"ServiceRecord"> | string
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -16608,6 +17849,7 @@ export namespace Prisma {
     equipmentModel?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     amount?: SortOrderInput | SortOrder
+    paymentStatus?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -16632,6 +17874,7 @@ export namespace Prisma {
     equipmentModel?: StringNullableWithAggregatesFilter<"ServiceRecord"> | string | null
     notes?: StringNullableWithAggregatesFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableWithAggregatesFilter<"ServiceRecord"> | number | null
+    paymentStatus?: StringWithAggregatesFilter<"ServiceRecord"> | string
     followUpDays?: IntWithAggregatesFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeWithAggregatesFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"ServiceRecord"> | Date | string
@@ -16644,19 +17887,19 @@ export namespace Prisma {
     NOT?: ReminderWhereInput | ReminderWhereInput[]
     id?: StringFilter<"Reminder"> | string
     clientId?: StringFilter<"Reminder"> | string
-    serviceRecordId?: StringFilter<"Reminder"> | string
+    serviceRecordId?: StringNullableFilter<"Reminder"> | string | null
     dueDate?: DateTimeFilter<"Reminder"> | Date | string
     message?: StringFilter<"Reminder"> | string
     status?: StringFilter<"Reminder"> | string
     createdAt?: DateTimeFilter<"Reminder"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
-    serviceRecord?: XOR<ServiceRecordScalarRelationFilter, ServiceRecordWhereInput>
+    serviceRecord?: XOR<ServiceRecordNullableScalarRelationFilter, ServiceRecordWhereInput> | null
   }
 
   export type ReminderOrderByWithRelationInput = {
     id?: SortOrder
     clientId?: SortOrder
-    serviceRecordId?: SortOrder
+    serviceRecordId?: SortOrderInput | SortOrder
     dueDate?: SortOrder
     message?: SortOrder
     status?: SortOrder
@@ -16671,19 +17914,19 @@ export namespace Prisma {
     OR?: ReminderWhereInput[]
     NOT?: ReminderWhereInput | ReminderWhereInput[]
     clientId?: StringFilter<"Reminder"> | string
-    serviceRecordId?: StringFilter<"Reminder"> | string
+    serviceRecordId?: StringNullableFilter<"Reminder"> | string | null
     dueDate?: DateTimeFilter<"Reminder"> | Date | string
     message?: StringFilter<"Reminder"> | string
     status?: StringFilter<"Reminder"> | string
     createdAt?: DateTimeFilter<"Reminder"> | Date | string
     client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
-    serviceRecord?: XOR<ServiceRecordScalarRelationFilter, ServiceRecordWhereInput>
+    serviceRecord?: XOR<ServiceRecordNullableScalarRelationFilter, ServiceRecordWhereInput> | null
   }, "id">
 
   export type ReminderOrderByWithAggregationInput = {
     id?: SortOrder
     clientId?: SortOrder
-    serviceRecordId?: SortOrder
+    serviceRecordId?: SortOrderInput | SortOrder
     dueDate?: SortOrder
     message?: SortOrder
     status?: SortOrder
@@ -16699,11 +17942,66 @@ export namespace Prisma {
     NOT?: ReminderScalarWhereWithAggregatesInput | ReminderScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Reminder"> | string
     clientId?: StringWithAggregatesFilter<"Reminder"> | string
-    serviceRecordId?: StringWithAggregatesFilter<"Reminder"> | string
+    serviceRecordId?: StringNullableWithAggregatesFilter<"Reminder"> | string | null
     dueDate?: DateTimeWithAggregatesFilter<"Reminder"> | Date | string
     message?: StringWithAggregatesFilter<"Reminder"> | string
     status?: StringWithAggregatesFilter<"Reminder"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Reminder"> | Date | string
+  }
+
+  export type InteractionWhereInput = {
+    AND?: InteractionWhereInput | InteractionWhereInput[]
+    OR?: InteractionWhereInput[]
+    NOT?: InteractionWhereInput | InteractionWhereInput[]
+    id?: StringFilter<"Interaction"> | string
+    clientId?: StringFilter<"Interaction"> | string
+    type?: StringFilter<"Interaction"> | string
+    note?: StringFilter<"Interaction"> | string
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+  }
+
+  export type InteractionOrderByWithRelationInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    type?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    client?: ClientOrderByWithRelationInput
+  }
+
+  export type InteractionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InteractionWhereInput | InteractionWhereInput[]
+    OR?: InteractionWhereInput[]
+    NOT?: InteractionWhereInput | InteractionWhereInput[]
+    clientId?: StringFilter<"Interaction"> | string
+    type?: StringFilter<"Interaction"> | string
+    note?: StringFilter<"Interaction"> | string
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
+    client?: XOR<ClientScalarRelationFilter, ClientWhereInput>
+  }, "id">
+
+  export type InteractionOrderByWithAggregationInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    type?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    _count?: InteractionCountOrderByAggregateInput
+    _max?: InteractionMaxOrderByAggregateInput
+    _min?: InteractionMinOrderByAggregateInput
+  }
+
+  export type InteractionScalarWhereWithAggregatesInput = {
+    AND?: InteractionScalarWhereWithAggregatesInput | InteractionScalarWhereWithAggregatesInput[]
+    OR?: InteractionScalarWhereWithAggregatesInput[]
+    NOT?: InteractionScalarWhereWithAggregatesInput | InteractionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Interaction"> | string
+    clientId?: StringWithAggregatesFilter<"Interaction"> | string
+    type?: StringWithAggregatesFilter<"Interaction"> | string
+    note?: StringWithAggregatesFilter<"Interaction"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Interaction"> | Date | string
   }
 
   export type AdCampaignWhereInput = {
@@ -17466,6 +18764,7 @@ export namespace Prisma {
     projects?: ProjectCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordCreateNestedManyWithoutClientInput
     reminders?: ReminderCreateNestedManyWithoutClientInput
+    interactions?: InteractionCreateNestedManyWithoutClientInput
   }
 
   export type ClientUncheckedCreateInput = {
@@ -17483,6 +18782,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordUncheckedCreateNestedManyWithoutClientInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutClientInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type ClientUpdateInput = {
@@ -17500,6 +18800,7 @@ export namespace Prisma {
     projects?: ProjectUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUpdateManyWithoutClientNestedInput
     reminders?: ReminderUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUpdateManyWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateInput = {
@@ -17517,6 +18818,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUncheckedUpdateManyWithoutClientNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ClientCreateManyInput = {
@@ -17569,6 +18871,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -17588,6 +18891,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -17605,6 +18909,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17624,6 +18929,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17642,6 +18948,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -17657,6 +18964,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17673,6 +18981,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17686,13 +18995,13 @@ export namespace Prisma {
     status?: string
     createdAt?: Date | string
     client: ClientCreateNestedOneWithoutRemindersInput
-    serviceRecord: ServiceRecordCreateNestedOneWithoutRemindersInput
+    serviceRecord?: ServiceRecordCreateNestedOneWithoutRemindersInput
   }
 
   export type ReminderUncheckedCreateInput = {
     id?: string
     clientId: string
-    serviceRecordId: string
+    serviceRecordId?: string | null
     dueDate: Date | string
     message: string
     status?: string
@@ -17706,13 +19015,13 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     client?: ClientUpdateOneRequiredWithoutRemindersNestedInput
-    serviceRecord?: ServiceRecordUpdateOneRequiredWithoutRemindersNestedInput
+    serviceRecord?: ServiceRecordUpdateOneWithoutRemindersNestedInput
   }
 
   export type ReminderUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientId?: StringFieldUpdateOperationsInput | string
-    serviceRecordId?: StringFieldUpdateOperationsInput | string
+    serviceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -17722,7 +19031,7 @@ export namespace Prisma {
   export type ReminderCreateManyInput = {
     id?: string
     clientId: string
-    serviceRecordId: string
+    serviceRecordId?: string | null
     dueDate: Date | string
     message: string
     status?: string
@@ -17740,10 +19049,65 @@ export namespace Prisma {
   export type ReminderUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     clientId?: StringFieldUpdateOperationsInput | string
-    serviceRecordId?: StringFieldUpdateOperationsInput | string
+    serviceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateInput = {
+    id?: string
+    type: string
+    note: string
+    createdAt?: Date | string
+    client: ClientCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type InteractionUncheckedCreateInput = {
+    id?: string
+    clientId: string
+    type: string
+    note: string
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    client?: ClientUpdateOneRequiredWithoutInteractionsNestedInput
+  }
+
+  export type InteractionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionCreateManyInput = {
+    id?: string
+    clientId: string
+    type: string
+    note: string
+    createdAt?: Date | string
+  }
+
+  export type InteractionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    clientId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -18501,6 +19865,12 @@ export namespace Prisma {
     none?: ReminderWhereInput
   }
 
+  export type InteractionListRelationFilter = {
+    every?: InteractionWhereInput
+    some?: InteractionWhereInput
+    none?: InteractionWhereInput
+  }
+
   export type ProjectOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -18510,6 +19880,10 @@ export namespace Prisma {
   }
 
   export type ReminderOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InteractionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18586,6 +19960,7 @@ export namespace Prisma {
     equipmentModel?: SortOrder
     notes?: SortOrder
     amount?: SortOrder
+    paymentStatus?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -18607,6 +19982,7 @@ export namespace Prisma {
     equipmentModel?: SortOrder
     notes?: SortOrder
     amount?: SortOrder
+    paymentStatus?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -18623,6 +19999,7 @@ export namespace Prisma {
     equipmentModel?: SortOrder
     notes?: SortOrder
     amount?: SortOrder
+    paymentStatus?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -18648,11 +20025,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type ServiceRecordScalarRelationFilter = {
-    is?: ServiceRecordWhereInput
-    isNot?: ServiceRecordWhereInput
   }
 
   export type ReminderCountOrderByAggregateInput = {
@@ -18682,6 +20054,30 @@ export namespace Prisma {
     dueDate?: SortOrder
     message?: SortOrder
     status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionCountOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    type?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    type?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InteractionMinOrderByAggregateInput = {
+    id?: SortOrder
+    clientId?: SortOrder
+    type?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -19076,6 +20472,13 @@ export namespace Prisma {
     connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
   }
 
+  export type InteractionCreateNestedManyWithoutClientInput = {
+    create?: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput> | InteractionCreateWithoutClientInput[] | InteractionUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutClientInput | InteractionCreateOrConnectWithoutClientInput[]
+    createMany?: InteractionCreateManyClientInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+  }
+
   export type ProjectUncheckedCreateNestedManyWithoutClientInput = {
     create?: XOR<ProjectCreateWithoutClientInput, ProjectUncheckedCreateWithoutClientInput> | ProjectCreateWithoutClientInput[] | ProjectUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutClientInput | ProjectCreateOrConnectWithoutClientInput[]
@@ -19095,6 +20498,13 @@ export namespace Prisma {
     connectOrCreate?: ReminderCreateOrConnectWithoutClientInput | ReminderCreateOrConnectWithoutClientInput[]
     createMany?: ReminderCreateManyClientInputEnvelope
     connect?: ReminderWhereUniqueInput | ReminderWhereUniqueInput[]
+  }
+
+  export type InteractionUncheckedCreateNestedManyWithoutClientInput = {
+    create?: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput> | InteractionCreateWithoutClientInput[] | InteractionUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutClientInput | InteractionCreateOrConnectWithoutClientInput[]
+    createMany?: InteractionCreateManyClientInputEnvelope
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
   }
 
   export type LeadUpdateOneWithoutClientNestedInput = {
@@ -19149,6 +20559,20 @@ export namespace Prisma {
     deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
   }
 
+  export type InteractionUpdateManyWithoutClientNestedInput = {
+    create?: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput> | InteractionCreateWithoutClientInput[] | InteractionUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutClientInput | InteractionCreateOrConnectWithoutClientInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutClientInput | InteractionUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: InteractionCreateManyClientInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutClientInput | InteractionUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutClientInput | InteractionUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+  }
+
   export type ProjectUncheckedUpdateManyWithoutClientNestedInput = {
     create?: XOR<ProjectCreateWithoutClientInput, ProjectUncheckedCreateWithoutClientInput> | ProjectCreateWithoutClientInput[] | ProjectUncheckedCreateWithoutClientInput[]
     connectOrCreate?: ProjectCreateOrConnectWithoutClientInput | ProjectCreateOrConnectWithoutClientInput[]
@@ -19189,6 +20613,20 @@ export namespace Prisma {
     update?: ReminderUpdateWithWhereUniqueWithoutClientInput | ReminderUpdateWithWhereUniqueWithoutClientInput[]
     updateMany?: ReminderUpdateManyWithWhereWithoutClientInput | ReminderUpdateManyWithWhereWithoutClientInput[]
     deleteMany?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutClientNestedInput = {
+    create?: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput> | InteractionCreateWithoutClientInput[] | InteractionUncheckedCreateWithoutClientInput[]
+    connectOrCreate?: InteractionCreateOrConnectWithoutClientInput | InteractionCreateOrConnectWithoutClientInput[]
+    upsert?: InteractionUpsertWithWhereUniqueWithoutClientInput | InteractionUpsertWithWhereUniqueWithoutClientInput[]
+    createMany?: InteractionCreateManyClientInputEnvelope
+    set?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    disconnect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    delete?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    connect?: InteractionWhereUniqueInput | InteractionWhereUniqueInput[]
+    update?: InteractionUpdateWithWhereUniqueWithoutClientInput | InteractionUpdateWithWhereUniqueWithoutClientInput[]
+    updateMany?: InteractionUpdateManyWithWhereWithoutClientInput | InteractionUpdateManyWithWhereWithoutClientInput[]
+    deleteMany?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
   }
 
   export type ClientCreateNestedOneWithoutServiceRecordsInput = {
@@ -19307,12 +20745,28 @@ export namespace Prisma {
     update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutRemindersInput, ClientUpdateWithoutRemindersInput>, ClientUncheckedUpdateWithoutRemindersInput>
   }
 
-  export type ServiceRecordUpdateOneRequiredWithoutRemindersNestedInput = {
+  export type ServiceRecordUpdateOneWithoutRemindersNestedInput = {
     create?: XOR<ServiceRecordCreateWithoutRemindersInput, ServiceRecordUncheckedCreateWithoutRemindersInput>
     connectOrCreate?: ServiceRecordCreateOrConnectWithoutRemindersInput
     upsert?: ServiceRecordUpsertWithoutRemindersInput
+    disconnect?: ServiceRecordWhereInput | boolean
+    delete?: ServiceRecordWhereInput | boolean
     connect?: ServiceRecordWhereUniqueInput
     update?: XOR<XOR<ServiceRecordUpdateToOneWithWhereWithoutRemindersInput, ServiceRecordUpdateWithoutRemindersInput>, ServiceRecordUncheckedUpdateWithoutRemindersInput>
+  }
+
+  export type ClientCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<ClientCreateWithoutInteractionsInput, ClientUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutInteractionsInput
+    connect?: ClientWhereUniqueInput
+  }
+
+  export type ClientUpdateOneRequiredWithoutInteractionsNestedInput = {
+    create?: XOR<ClientCreateWithoutInteractionsInput, ClientUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: ClientCreateOrConnectWithoutInteractionsInput
+    upsert?: ClientUpsertWithoutInteractionsInput
+    connect?: ClientWhereUniqueInput
+    update?: XOR<XOR<ClientUpdateToOneWithWhereWithoutInteractionsInput, ClientUpdateWithoutInteractionsInput>, ClientUncheckedUpdateWithoutInteractionsInput>
   }
 
   export type AdMetricCreateNestedManyWithoutCampaignInput = {
@@ -19921,6 +21375,7 @@ export namespace Prisma {
     lead?: LeadCreateNestedOneWithoutClientInput
     serviceRecords?: ServiceRecordCreateNestedManyWithoutClientInput
     reminders?: ReminderCreateNestedManyWithoutClientInput
+    interactions?: InteractionCreateNestedManyWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutProjectsInput = {
@@ -19937,6 +21392,7 @@ export namespace Prisma {
     leadId?: string | null
     serviceRecords?: ServiceRecordUncheckedCreateNestedManyWithoutClientInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutClientInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutProjectsInput = {
@@ -19953,6 +21409,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -19971,6 +21428,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -20008,6 +21466,7 @@ export namespace Prisma {
     lead?: LeadUpdateOneWithoutClientNestedInput
     serviceRecords?: ServiceRecordUpdateManyWithoutClientNestedInput
     reminders?: ReminderUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUpdateManyWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutProjectsInput = {
@@ -20024,6 +21483,7 @@ export namespace Prisma {
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
     serviceRecords?: ServiceRecordUncheckedUpdateManyWithoutClientNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ServiceRecordUpsertWithoutProjectInput = {
@@ -20046,6 +21506,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20064,6 +21525,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20161,6 +21623,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -20178,6 +21641,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -20202,12 +21666,12 @@ export namespace Prisma {
     message: string
     status?: string
     createdAt?: Date | string
-    serviceRecord: ServiceRecordCreateNestedOneWithoutRemindersInput
+    serviceRecord?: ServiceRecordCreateNestedOneWithoutRemindersInput
   }
 
   export type ReminderUncheckedCreateWithoutClientInput = {
     id?: string
-    serviceRecordId: string
+    serviceRecordId?: string | null
     dueDate: Date | string
     message: string
     status?: string
@@ -20221,6 +21685,30 @@ export namespace Prisma {
 
   export type ReminderCreateManyClientInputEnvelope = {
     data: ReminderCreateManyClientInput | ReminderCreateManyClientInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InteractionCreateWithoutClientInput = {
+    id?: string
+    type: string
+    note: string
+    createdAt?: Date | string
+  }
+
+  export type InteractionUncheckedCreateWithoutClientInput = {
+    id?: string
+    type: string
+    note: string
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateOrConnectWithoutClientInput = {
+    where: InteractionWhereUniqueInput
+    create: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput>
+  }
+
+  export type InteractionCreateManyClientInputEnvelope = {
+    data: InteractionCreateManyClientInput | InteractionCreateManyClientInput[]
     skipDuplicates?: boolean
   }
 
@@ -20330,6 +21818,7 @@ export namespace Prisma {
     equipmentModel?: StringNullableFilter<"ServiceRecord"> | string | null
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
+    paymentStatus?: StringFilter<"ServiceRecord"> | string
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -20358,11 +21847,38 @@ export namespace Prisma {
     NOT?: ReminderScalarWhereInput | ReminderScalarWhereInput[]
     id?: StringFilter<"Reminder"> | string
     clientId?: StringFilter<"Reminder"> | string
-    serviceRecordId?: StringFilter<"Reminder"> | string
+    serviceRecordId?: StringNullableFilter<"Reminder"> | string | null
     dueDate?: DateTimeFilter<"Reminder"> | Date | string
     message?: StringFilter<"Reminder"> | string
     status?: StringFilter<"Reminder"> | string
     createdAt?: DateTimeFilter<"Reminder"> | Date | string
+  }
+
+  export type InteractionUpsertWithWhereUniqueWithoutClientInput = {
+    where: InteractionWhereUniqueInput
+    update: XOR<InteractionUpdateWithoutClientInput, InteractionUncheckedUpdateWithoutClientInput>
+    create: XOR<InteractionCreateWithoutClientInput, InteractionUncheckedCreateWithoutClientInput>
+  }
+
+  export type InteractionUpdateWithWhereUniqueWithoutClientInput = {
+    where: InteractionWhereUniqueInput
+    data: XOR<InteractionUpdateWithoutClientInput, InteractionUncheckedUpdateWithoutClientInput>
+  }
+
+  export type InteractionUpdateManyWithWhereWithoutClientInput = {
+    where: InteractionScalarWhereInput
+    data: XOR<InteractionUpdateManyMutationInput, InteractionUncheckedUpdateManyWithoutClientInput>
+  }
+
+  export type InteractionScalarWhereInput = {
+    AND?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+    OR?: InteractionScalarWhereInput[]
+    NOT?: InteractionScalarWhereInput | InteractionScalarWhereInput[]
+    id?: StringFilter<"Interaction"> | string
+    clientId?: StringFilter<"Interaction"> | string
+    type?: StringFilter<"Interaction"> | string
+    note?: StringFilter<"Interaction"> | string
+    createdAt?: DateTimeFilter<"Interaction"> | Date | string
   }
 
   export type ClientCreateWithoutServiceRecordsInput = {
@@ -20379,6 +21895,7 @@ export namespace Prisma {
     lead?: LeadCreateNestedOneWithoutClientInput
     projects?: ProjectCreateNestedManyWithoutClientInput
     reminders?: ReminderCreateNestedManyWithoutClientInput
+    interactions?: InteractionCreateNestedManyWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutServiceRecordsInput = {
@@ -20395,6 +21912,7 @@ export namespace Prisma {
     leadId?: string | null
     projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutClientInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutServiceRecordsInput = {
@@ -20500,6 +22018,7 @@ export namespace Prisma {
     lead?: LeadUpdateOneWithoutClientNestedInput
     projects?: ProjectUpdateManyWithoutClientNestedInput
     reminders?: ReminderUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUpdateManyWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutServiceRecordsInput = {
@@ -20516,6 +22035,7 @@ export namespace Prisma {
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
     projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ReminderUpsertWithWhereUniqueWithoutServiceRecordInput = {
@@ -20599,6 +22119,7 @@ export namespace Prisma {
     lead?: LeadCreateNestedOneWithoutClientInput
     projects?: ProjectCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordCreateNestedManyWithoutClientInput
+    interactions?: InteractionCreateNestedManyWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutRemindersInput = {
@@ -20615,6 +22136,7 @@ export namespace Prisma {
     leadId?: string | null
     projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordUncheckedCreateNestedManyWithoutClientInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutRemindersInput = {
@@ -20631,6 +22153,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -20649,6 +22172,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -20686,6 +22210,7 @@ export namespace Prisma {
     lead?: LeadUpdateOneWithoutClientNestedInput
     projects?: ProjectUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUpdateManyWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutRemindersInput = {
@@ -20702,6 +22227,7 @@ export namespace Prisma {
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
     projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUncheckedUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type ServiceRecordUpsertWithoutRemindersInput = {
@@ -20724,6 +22250,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20742,11 +22269,96 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     project?: ProjectUncheckedUpdateOneWithoutServiceRecordNestedInput
+  }
+
+  export type ClientCreateWithoutInteractionsInput = {
+    id?: string
+    name: string
+    phone: string
+    email?: string | null
+    address?: string | null
+    city?: string | null
+    notes?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    lead?: LeadCreateNestedOneWithoutClientInput
+    projects?: ProjectCreateNestedManyWithoutClientInput
+    serviceRecords?: ServiceRecordCreateNestedManyWithoutClientInput
+    reminders?: ReminderCreateNestedManyWithoutClientInput
+  }
+
+  export type ClientUncheckedCreateWithoutInteractionsInput = {
+    id?: string
+    name: string
+    phone: string
+    email?: string | null
+    address?: string | null
+    city?: string | null
+    notes?: string | null
+    source?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    leadId?: string | null
+    projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
+    serviceRecords?: ServiceRecordUncheckedCreateNestedManyWithoutClientInput
+    reminders?: ReminderUncheckedCreateNestedManyWithoutClientInput
+  }
+
+  export type ClientCreateOrConnectWithoutInteractionsInput = {
+    where: ClientWhereUniqueInput
+    create: XOR<ClientCreateWithoutInteractionsInput, ClientUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type ClientUpsertWithoutInteractionsInput = {
+    update: XOR<ClientUpdateWithoutInteractionsInput, ClientUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<ClientCreateWithoutInteractionsInput, ClientUncheckedCreateWithoutInteractionsInput>
+    where?: ClientWhereInput
+  }
+
+  export type ClientUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: ClientWhereInput
+    data: XOR<ClientUpdateWithoutInteractionsInput, ClientUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type ClientUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lead?: LeadUpdateOneWithoutClientNestedInput
+    projects?: ProjectUpdateManyWithoutClientNestedInput
+    serviceRecords?: ServiceRecordUpdateManyWithoutClientNestedInput
+    reminders?: ReminderUpdateManyWithoutClientNestedInput
+  }
+
+  export type ClientUncheckedUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    leadId?: NullableStringFieldUpdateOperationsInput | string | null
+    projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput
+    serviceRecords?: ServiceRecordUncheckedUpdateManyWithoutClientNestedInput
+    reminders?: ReminderUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type AdMetricCreateWithoutCampaignInput = {
@@ -20872,6 +22484,7 @@ export namespace Prisma {
     projects?: ProjectCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordCreateNestedManyWithoutClientInput
     reminders?: ReminderCreateNestedManyWithoutClientInput
+    interactions?: InteractionCreateNestedManyWithoutClientInput
   }
 
   export type ClientUncheckedCreateWithoutLeadInput = {
@@ -20888,6 +22501,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
     serviceRecords?: ServiceRecordUncheckedCreateNestedManyWithoutClientInput
     reminders?: ReminderUncheckedCreateNestedManyWithoutClientInput
+    interactions?: InteractionUncheckedCreateNestedManyWithoutClientInput
   }
 
   export type ClientCreateOrConnectWithoutLeadInput = {
@@ -20920,6 +22534,7 @@ export namespace Prisma {
     projects?: ProjectUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUpdateManyWithoutClientNestedInput
     reminders?: ReminderUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUpdateManyWithoutClientNestedInput
   }
 
   export type ClientUncheckedUpdateWithoutLeadInput = {
@@ -20936,6 +22551,7 @@ export namespace Prisma {
     projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput
     serviceRecords?: ServiceRecordUncheckedUpdateManyWithoutClientNestedInput
     reminders?: ReminderUncheckedUpdateManyWithoutClientNestedInput
+    interactions?: InteractionUncheckedUpdateManyWithoutClientNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -21067,6 +22683,7 @@ export namespace Prisma {
     equipmentModel?: string | null
     notes?: string | null
     amount?: number | null
+    paymentStatus?: string
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -21075,10 +22692,17 @@ export namespace Prisma {
 
   export type ReminderCreateManyClientInput = {
     id?: string
-    serviceRecordId: string
+    serviceRecordId?: string | null
     dueDate: Date | string
     message: string
     status?: string
+    createdAt?: Date | string
+  }
+
+  export type InteractionCreateManyClientInput = {
+    id?: string
+    type: string
+    note: string
     createdAt?: Date | string
   }
 
@@ -21151,6 +22775,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21168,6 +22793,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21185,6 +22811,7 @@ export namespace Prisma {
     equipmentModel?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
+    paymentStatus?: StringFieldUpdateOperationsInput | string
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21197,12 +22824,12 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    serviceRecord?: ServiceRecordUpdateOneRequiredWithoutRemindersNestedInput
+    serviceRecord?: ServiceRecordUpdateOneWithoutRemindersNestedInput
   }
 
   export type ReminderUncheckedUpdateWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    serviceRecordId?: StringFieldUpdateOperationsInput | string
+    serviceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
@@ -21211,10 +22838,31 @@ export namespace Prisma {
 
   export type ReminderUncheckedUpdateManyWithoutClientInput = {
     id?: StringFieldUpdateOperationsInput | string
-    serviceRecordId?: StringFieldUpdateOperationsInput | string
+    serviceRecordId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     message?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InteractionUncheckedUpdateManyWithoutClientInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    note?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

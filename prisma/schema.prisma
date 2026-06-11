@@ -114,6 +114,7 @@ model Client {
   projects       Project[]
   serviceRecords ServiceRecord[]
   reminders      Reminder[]
+  interactions   Interaction[]
 }
 
 // Un ServiceRecord es la unidad de trabajo realizado para un cliente.
@@ -129,6 +130,7 @@ model ServiceRecord {
   equipmentModel String?
   notes          String?
   amount         Float?    // costo del servicio (opcional)
+  paymentStatus  String    @default("PAID") // "PAID" | "PENDING"  — estado de cobro
   followUpDays   Int       @default(180)
   followUpDate   DateTime
   createdAt      DateTime  @default(now())
@@ -142,14 +144,27 @@ model ServiceRecord {
 model Reminder {
   id              String   @id @default(cuid())
   clientId        String
-  serviceRecordId String
+  serviceRecordId String?  // null = recordatorio ad-hoc (no atado a un servicio)
   dueDate         DateTime
   message         String
   status          String   @default("PENDING") // "PENDING" | "DISMISSED" | "DONE"
   createdAt       DateTime @default(now())
 
-  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  serviceRecord ServiceRecord @relation(fields: [serviceRecordId], references: [id], onDelete: Cascade)
+  client        Client         @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  serviceRecord ServiceRecord? @relation(fields: [serviceRecordId], references: [id], onDelete: Cascade)
+}
+
+// Bitácora de contacto con el cliente (llamadas, WhatsApp, visitas, notas).
+model Interaction {
+  id        String   @id @default(cuid())
+  clientId  String
+  type      String   // "CALL" | "WHATSAPP" | "VISIT" | "EMAIL" | "NOTE"
+  note      String
+  createdAt DateTime @default(now())
+
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@index([clientId, createdAt])
 }
 
 // ─── Google Ads ───────────────────────────────────────────────────────────────

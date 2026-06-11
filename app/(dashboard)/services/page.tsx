@@ -4,6 +4,7 @@ import { es } from "date-fns/locale"
 import Link from "next/link"
 import { Wrench } from "lucide-react"
 import { PromoteToPortfolioButton } from "@/components/crm/promote-to-portfolio-button"
+import { PaymentStatusToggle } from "@/components/crm/payment-status-toggle"
 
 interface Props {
   searchParams: Promise<{ type?: string; status?: string; q?: string }>
@@ -67,13 +68,16 @@ export default async function ServicesPage({ searchParams }: Props) {
   })
 
   // KPIs
-  const [total, pending, completed, revenue] = await Promise.all([
+  const [total, pending, completed, paidAgg, pendingAgg] = await Promise.all([
     prisma.serviceRecord.count(),
     prisma.serviceRecord.count({ where: { status: "PENDING" } }),
     prisma.serviceRecord.count({ where: { status: "COMPLETED" } }),
-    prisma.serviceRecord.aggregate({ _sum: { amount: true } }),
+    prisma.serviceRecord.aggregate({ _sum: { amount: true }, where: { paymentStatus: "PAID" } }),
+    prisma.serviceRecord.aggregate({ _sum: { amount: true }, where: { paymentStatus: "PENDING" } }),
   ])
-  const totalRevenue = revenue._sum.amount ?? 0
+  const paidRevenue    = paidAgg._sum.amount ?? 0
+  const pendingRevenue = pendingAgg._sum.amount ?? 0
+  const fmtMoney = (n: number) => `$${n.toLocaleString("en-US", { minimumFractionDigits: 0 })}`
   const withPortfolio = records.filter((r) => r.project).length
 
   function buildHref(params: Record<string, string>) {
@@ -103,9 +107,9 @@ export default async function ServicesPage({ searchParams }: Props) {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: "Total servicios",  value: total,     sub: "histórico" },
-          { label: "Pendientes",       value: pending,   sub: "requieren acción" },
-          { label: "Completados",      value: completed, sub: "servicios cerrados" },
-          { label: "Ingresos totales", value: `$${totalRevenue.toLocaleString("en-US", { minimumFractionDigits: 0 })}`, sub: "registrados" },
+          { label: "Completados",      value: completed, sub: `${pending} pendientes` },
+          { label: "Ingresos cobrados", value: fmtMoney(paidRevenue),    sub: "registrados" },
+          { label: "Por cobrar",        value: fmtMoney(pendingRevenue), sub: "pendiente de pago" },
         ].map((k) => (
           <div key={k.label} className="rounded-lg border border-border bg-bg-subtle p-3">
             <p className="text-xs text-app-muted">{k.label}</p>
@@ -180,6 +184,7 @@ export default async function ServicesPage({ searchParams }: Props) {
               <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden md:table-cell">Fecha</th>
               <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden md:table-cell">Equipo</th>
               <th className="px-3 py-2 text-left text-xs font-medium text-app-muted hidden lg:table-cell">Costo</th>
+              <th className="px-3 py-2 text-left text-xs font-medium text-app-muted">Cobro</th>
               <th className="px-3 py-2 text-right text-xs font-medium text-app-muted">Portafolio</th>
             </tr>
           </thead>
@@ -237,6 +242,12 @@ export default async function ServicesPage({ searchParams }: Props) {
                     {sr.amount != null
                       ? `$${sr.amount.toLocaleString("en-US", { minimumFractionDigits: 0 })}`
                       : "—"}
+                  </td>
+
+                  <td className="px-3 py-2.5">
+                    {sr.amount != null
+                      ? <PaymentStatusToggle id={sr.id} paymentStatus={sr.paymentStatus} />
+                      : <span className="text-[11px] text-app-muted/50">—</span>}
                   </td>
 
                   <td className="px-3 py-2.5 text-right">
