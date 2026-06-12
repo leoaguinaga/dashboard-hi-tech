@@ -4,6 +4,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { Sidebar } from "@/components/sidebar";
 import { UserNav } from "@/components/user-nav";
+import { MobileSidebar } from "@/components/mobile-sidebar";
 
 export default async function DashboardLayout({
   children,
@@ -40,8 +41,14 @@ export default async function DashboardLayout({
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top Header */}
         <header className="flex h-14 items-center justify-between border-b border-border bg-bg-base px-6 shrink-0 md:justify-end">
-          {/* Mobile hamburger menu placeholder or other info */}
           <div className="flex items-center gap-2 md:hidden">
+            <MobileSidebar
+              user={{
+                name: user.name,
+                email: user.email,
+                role: user.role || "VIEWER",
+              }}
+            />
             <span className="font-bold text-sm text-brand-primary">Hi-Tech</span>
           </div>
 
