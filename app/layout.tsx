@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Hi-Tech HVAC — Panel de Control",
   description: "Sistema interno de gestión para Hi-Tech HVAC",
+  icons: {
+    icon: [{ url: "/favicon.webp", type: "image/webp" }],
+  },
 };
 
 export default function RootLayout({
