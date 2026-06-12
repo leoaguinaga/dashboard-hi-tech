@@ -26,32 +26,70 @@ export async function createLeadManual(formData: FormData) {
   const service = (formData.get("service") as string).trim()
   const message = (formData.get("message") as string)?.trim() || null
 
-  await prisma.lead.create({
+  const lead = await prisma.lead.create({
     data: { name, phone, email, service, message, source: "manual" },
   })
+
+  const existing = await prisma.client.findFirst({ where: { phone } })
+  if (existing) {
+    if (!existing.leadId) {
+      await prisma.client.update({
+        where: { id: existing.id },
+        data:  { leadId: lead.id },
+      })
+    }
+  } else {
+    await prisma.client.create({
+      data: { name, phone, email, source: "manual", category: "CONTACT", leadId: lead.id },
+    })
+  }
+
   revalidatePath("/leads")
+  revalidatePath("/crm/clientes")
 }
 
 export async function convertLeadToClient(leadId: string) {
   const lead = await prisma.lead.findUnique({
     where:   { id: leadId },
-    include: { client: { select: { id: true } } },
+    include: { client: { select: { id: true, category: true } } },
   })
 
   if (!lead) throw new Error("Lead no encontrado")
 
-  // Si ya fue convertido, ir directo al perfil
-  if (lead.client) redirect(`/crm/clientes/${lead.client.id}`)
+  let clientId: string
 
-  const client = await prisma.client.create({
-    data: {
-      name:   lead.name,
-      phone:  lead.phone,
-      email:  lead.email,
-      source: lead.source,
-      leadId: lead.id,
-    },
-  })
+  if (lead.client) {
+    // Ya hay un Client vinculado (probablemente como CONTACT) — promover a CLIENT.
+    clientId = lead.client.id
+    if (lead.client.category !== "CLIENT") {
+      await prisma.client.update({
+        where: { id: clientId },
+        data:  { category: "CLIENT" },
+      })
+    }
+  } else {
+    // Por si el lead se creó antes de que existiera el auto-contacto.
+    const existing = await prisma.client.findFirst({ where: { phone: lead.phone } })
+    if (existing) {
+      clientId = existing.id
+      await prisma.client.update({
+        where: { id: existing.id },
+        data:  { category: "CLIENT", leadId: lead.id },
+      })
+    } else {
+      const created = await prisma.client.create({
+        data: {
+          name:     lead.name,
+          phone:    lead.phone,
+          email:    lead.email,
+          source:   lead.source,
+          category: "CLIENT",
+          leadId:   lead.id,
+        },
+      })
+      clientId = created.id
+    }
+  }
 
   // Asegurar que el lead quede en WON
   if (lead.status !== "WON") {
@@ -60,5 +98,5 @@ export async function convertLeadToClient(leadId: string) {
 
   revalidatePath("/leads")
   revalidatePath("/crm/clientes")
-  redirect(`/crm/clientes/${client.id}`)
+  redirect(`/crm/clientes/${clientId}`)
 }

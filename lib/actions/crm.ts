@@ -21,11 +21,12 @@ export async function createClient(formData: FormData) {
   const phone   = (formData.get("phone")   as string).trim()
   const email   = (formData.get("email")   as string)?.trim()  || null
   const address = (formData.get("address") as string)?.trim()  || null
-  const source = formData.get("source") as string
+  const source  = formData.get("source") as string
   const notes   = (formData.get("notes")   as string)?.trim()  || null
+  const category = ((formData.get("category") as string) || "CLIENT") === "CONTACT" ? "CONTACT" : "CLIENT"
 
   const client = await prisma.client.create({
-    data: { name, phone, email, address, source, notes },
+    data: { name, phone, email, address, source, notes, category },
   })
 
   redirect(`/crm/clientes/${client.id}`)
@@ -122,6 +123,44 @@ export async function setServicePaymentStatus(id: string, paymentStatus: "PAID" 
 
 export async function updateReminderStatus(id: string, status: "DONE" | "DISMISSED") {
   const reminder = await prisma.reminder.update({ where: { id }, data: { status } })
+  revalidateCRM(reminder.clientId)
+}
+
+/**
+ * Marca un recordatorio como completado y opcionalmente crea el siguiente.
+ * Caso de uso: ya contacté al cliente; el AC vence en 6 meses → crear el próximo seguimiento.
+ */
+export async function completeReminderWithFollowUp(
+  id: string,
+  nextDueDate: string | null,
+  nextMessage?: string,
+) {
+  const reminder = await prisma.reminder.update({
+    where: { id },
+    data:  { status: "DONE" },
+    include: { serviceRecord: { select: { equipmentBrand: true, equipmentModel: true } } },
+  })
+
+  if (nextDueDate) {
+    const dueDate = new Date(nextDueDate + "T12:00:00")
+    const equipment = reminder.serviceRecord
+      ? [reminder.serviceRecord.equipmentBrand, reminder.serviceRecord.equipmentModel]
+          .filter(Boolean).join(" ")
+      : ""
+    const message = nextMessage?.trim()
+      || (equipment ? `Mantenimiento preventivo — ${equipment}` : "Seguimiento")
+
+    await prisma.reminder.create({
+      data: {
+        clientId:        reminder.clientId,
+        serviceRecordId: reminder.serviceRecordId,
+        dueDate,
+        message,
+        status:          "PENDING",
+      },
+    })
+  }
+
   revalidateCRM(reminder.clientId)
 }
 

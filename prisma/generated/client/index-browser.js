@@ -197,6 +197,7 @@ exports.Prisma.ClientScalarFieldEnum = {
   city: 'city',
   notes: 'notes',
   source: 'source',
+  category: 'category',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   leadId: 'leadId'

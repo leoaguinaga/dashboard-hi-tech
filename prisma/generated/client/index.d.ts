@@ -7876,6 +7876,7 @@ export namespace Prisma {
     city: string | null
     notes: string | null
     source: string | null
+    category: string | null
     createdAt: Date | null
     updatedAt: Date | null
     leadId: string | null
@@ -7890,6 +7891,7 @@ export namespace Prisma {
     city: string | null
     notes: string | null
     source: string | null
+    category: string | null
     createdAt: Date | null
     updatedAt: Date | null
     leadId: string | null
@@ -7904,6 +7906,7 @@ export namespace Prisma {
     city: number
     notes: number
     source: number
+    category: number
     createdAt: number
     updatedAt: number
     leadId: number
@@ -7920,6 +7923,7 @@ export namespace Prisma {
     city?: true
     notes?: true
     source?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
     leadId?: true
@@ -7934,6 +7938,7 @@ export namespace Prisma {
     city?: true
     notes?: true
     source?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
     leadId?: true
@@ -7948,6 +7953,7 @@ export namespace Prisma {
     city?: true
     notes?: true
     source?: true
+    category?: true
     createdAt?: true
     updatedAt?: true
     leadId?: true
@@ -8035,6 +8041,7 @@ export namespace Prisma {
     city: string | null
     notes: string | null
     source: string
+    category: string
     createdAt: Date
     updatedAt: Date
     leadId: string | null
@@ -8066,6 +8073,7 @@ export namespace Prisma {
     city?: boolean
     notes?: boolean
     source?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     leadId?: boolean
@@ -8086,6 +8094,7 @@ export namespace Prisma {
     city?: boolean
     notes?: boolean
     source?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     leadId?: boolean
@@ -8101,6 +8110,7 @@ export namespace Prisma {
     city?: boolean
     notes?: boolean
     source?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     leadId?: boolean
@@ -8116,12 +8126,13 @@ export namespace Prisma {
     city?: boolean
     notes?: boolean
     source?: boolean
+    category?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     leadId?: boolean
   }
 
-  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "address" | "city" | "notes" | "source" | "createdAt" | "updatedAt" | "leadId", ExtArgs["result"]["client"]>
+  export type ClientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "address" | "city" | "notes" | "source" | "category" | "createdAt" | "updatedAt" | "leadId", ExtArgs["result"]["client"]>
   export type ClientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     lead?: boolean | Client$leadArgs<ExtArgs>
     projects?: boolean | Client$projectsArgs<ExtArgs>
@@ -8155,6 +8166,7 @@ export namespace Prisma {
       city: string | null
       notes: string | null
       source: string
+      category: string
       createdAt: Date
       updatedAt: Date
       leadId: string | null
@@ -8594,6 +8606,7 @@ export namespace Prisma {
     readonly city: FieldRef<"Client", 'String'>
     readonly notes: FieldRef<"Client", 'String'>
     readonly source: FieldRef<"Client", 'String'>
+    readonly category: FieldRef<"Client", 'String'>
     readonly createdAt: FieldRef<"Client", 'DateTime'>
     readonly updatedAt: FieldRef<"Client", 'DateTime'>
     readonly leadId: FieldRef<"Client", 'String'>
@@ -17056,6 +17069,7 @@ export namespace Prisma {
     city: 'city',
     notes: 'notes',
     source: 'source',
+    category: 'category',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     leadId: 'leadId'
@@ -17688,6 +17702,7 @@ export namespace Prisma {
     city?: StringNullableFilter<"Client"> | string | null
     notes?: StringNullableFilter<"Client"> | string | null
     source?: StringFilter<"Client"> | string
+    category?: StringFilter<"Client"> | string
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
     leadId?: StringNullableFilter<"Client"> | string | null
@@ -17707,6 +17722,7 @@ export namespace Prisma {
     city?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     source?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leadId?: SortOrderInput | SortOrder
@@ -17730,6 +17746,7 @@ export namespace Prisma {
     city?: StringNullableFilter<"Client"> | string | null
     notes?: StringNullableFilter<"Client"> | string | null
     source?: StringFilter<"Client"> | string
+    category?: StringFilter<"Client"> | string
     createdAt?: DateTimeFilter<"Client"> | Date | string
     updatedAt?: DateTimeFilter<"Client"> | Date | string
     lead?: XOR<LeadNullableScalarRelationFilter, LeadWhereInput> | null
@@ -17748,6 +17765,7 @@ export namespace Prisma {
     city?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     source?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leadId?: SortOrderInput | SortOrder
@@ -17768,6 +17786,7 @@ export namespace Prisma {
     city?: StringNullableWithAggregatesFilter<"Client"> | string | null
     notes?: StringNullableWithAggregatesFilter<"Client"> | string | null
     source?: StringWithAggregatesFilter<"Client"> | string
+    category?: StringWithAggregatesFilter<"Client"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Client"> | Date | string
     leadId?: StringNullableWithAggregatesFilter<"Client"> | string | null
@@ -18758,6 +18777,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     lead?: LeadCreateNestedOneWithoutClientInput
@@ -18776,6 +18796,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -18794,6 +18815,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneWithoutClientNestedInput
@@ -18812,6 +18834,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18830,6 +18853,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -18844,6 +18868,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18857,6 +18882,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19896,6 +19922,7 @@ export namespace Prisma {
     city?: SortOrder
     notes?: SortOrder
     source?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leadId?: SortOrder
@@ -19910,6 +19937,7 @@ export namespace Prisma {
     city?: SortOrder
     notes?: SortOrder
     source?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leadId?: SortOrder
@@ -19924,6 +19952,7 @@ export namespace Prisma {
     city?: SortOrder
     notes?: SortOrder
     source?: SortOrder
+    category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     leadId?: SortOrder
@@ -21370,6 +21399,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     lead?: LeadCreateNestedOneWithoutClientInput
@@ -21387,6 +21417,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -21461,6 +21492,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneWithoutClientNestedInput
@@ -21478,6 +21510,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21890,6 +21923,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     lead?: LeadCreateNestedOneWithoutClientInput
@@ -21907,6 +21941,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -22013,6 +22048,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneWithoutClientNestedInput
@@ -22030,6 +22066,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22114,6 +22151,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     lead?: LeadCreateNestedOneWithoutClientInput
@@ -22131,6 +22169,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -22205,6 +22244,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneWithoutClientNestedInput
@@ -22222,6 +22262,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22286,6 +22327,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     lead?: LeadCreateNestedOneWithoutClientInput
@@ -22303,6 +22345,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     leadId?: string | null
@@ -22336,6 +22379,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lead?: LeadUpdateOneWithoutClientNestedInput
@@ -22353,6 +22397,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     leadId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22479,6 +22524,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectCreateNestedManyWithoutClientInput
@@ -22496,6 +22542,7 @@ export namespace Prisma {
     city?: string | null
     notes?: string | null
     source?: string
+    category?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutClientInput
@@ -22529,6 +22576,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUpdateManyWithoutClientNestedInput
@@ -22546,6 +22594,7 @@ export namespace Prisma {
     city?: NullableStringFieldUpdateOperationsInput | string | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     source?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutClientNestedInput

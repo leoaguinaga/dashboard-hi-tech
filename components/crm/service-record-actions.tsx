@@ -1,12 +1,13 @@
 "use client"
 
-import { useRef, useState, useTransition } from "react"
+import { useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { updateServiceRecord, deleteServiceRecord } from "@/lib/actions/crm"
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
+import { ConfirmDialog } from "@/components/ui/confirm-dialog"
 import { ServiceRecordFields } from "@/components/crm/service-record-fields"
 import { Pencil, Trash2 } from "lucide-react"
 
@@ -28,7 +29,6 @@ export function ServiceRecordActions({ record }: { record: ServiceRecordData }) 
   const [type,    setType]    = useState(record.type)
   const [status,  setStatus]  = useState(record.status)
   const [payment, setPayment] = useState(record.paymentStatus)
-  const [isDeleting, startDelete] = useTransition()
   const formRef = useRef<HTMLFormElement>(null)
   const router  = useRouter()
 
@@ -51,12 +51,9 @@ export function ServiceRecordActions({ record }: { record: ServiceRecordData }) 
     }
   }
 
-  function handleDelete() {
-    if (!confirm("¿Eliminar este servicio? Sus recordatorios asociados también se borrarán.")) return
-    startDelete(async () => {
-      await deleteServiceRecord(record.id)
-      router.refresh()
-    })
+  async function handleDelete() {
+    await deleteServiceRecord(record.id)
+    router.refresh()
   }
 
   return (
@@ -105,15 +102,21 @@ export function ServiceRecordActions({ record }: { record: ServiceRecordData }) 
         </DialogContent>
       </Dialog>
 
-      <button
-        type="button"
-        onClick={handleDelete}
-        disabled={isDeleting}
-        title="Eliminar servicio"
-        className="inline-flex h-6 w-6 items-center justify-center rounded text-app-muted hover:text-danger hover:bg-danger/5 transition-colors disabled:opacity-50"
-      >
-        <Trash2 className="h-3.5 w-3.5" />
-      </button>
+      <ConfirmDialog
+        title="¿Eliminar este servicio?"
+        description="Sus recordatorios asociados también se borrarán. Esta acción no se puede deshacer."
+        confirmLabel="Eliminar"
+        onConfirm={handleDelete}
+        trigger={
+          <button
+            type="button"
+            title="Eliminar servicio"
+            className="inline-flex h-6 w-6 items-center justify-center rounded text-app-muted hover:text-danger hover:bg-danger/5 transition-colors disabled:opacity-50"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+          </button>
+        }
+      />
     </div>
   )
 }

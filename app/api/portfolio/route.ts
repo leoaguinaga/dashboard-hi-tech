@@ -1,6 +1,20 @@
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { format } from "date-fns"
+import { corsHeaders } from "@/lib/cors"
+import { getClientIp, rateLimit, rateLimitHeaders } from "@/lib/rate-limit"
+
+// 60 reads / minute per IP — generous for normal browsing, blocks scrapers.
+const PORTFOLIO_LIMIT     = 60
+const PORTFOLIO_WINDOW_MS = 60 * 1000
+
+/** Pre-flight for cross-origin requests from the landing */
+export function OPTIONS(req: NextRequest) {
+  return new NextResponse(null, {
+    status:  204,
+    headers: corsHeaders(req, "GET, OPTIONS"),
+  })
+}
 
 /**
  * GET /api/portfolio
@@ -19,9 +33,33 @@ import { format } from "date-fns"
  * Query params:
  *   published=true  → solo proyectos publicados
  *
- * CORS habilitado para que la landing pueda consumirlo desde otro dominio.
+ * CORS restringido a la landing (ver lib/cors.ts).
  */
-export async function GET(_req: NextRequest) {
+export async function GET(req: NextRequest) {
+  const cors = corsHeaders(req, "GET, OPTIONS")
+
+  const ip = getClientIp(req)
+  const rl = rateLimit({
+    key:      `portfolio:${ip}`,
+    limit:    PORTFOLIO_LIMIT,
+    windowMs: PORTFOLIO_WINDOW_MS,
+  })
+  const rlHeaders = rateLimitHeaders(rl)
+
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      {
+        status:  429,
+        headers: {
+          ...cors,
+          ...rlHeaders,
+          "Retry-After": String(rl.retryAfterSec),
+        },
+      },
+    )
+  }
+
   // This is a public endpoint — always return only published projects.
   // Drafts are never exposed here; the dashboard reads Prisma directly.
   const projects = await prisma.project.findMany({
@@ -65,9 +103,9 @@ export async function GET(_req: NextRequest) {
     { projects: data },
     {
       headers: {
-        "Access-Control-Allow-Origin":  "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Cache-Control":                "public, s-maxage=60, stale-while-revalidate=300",
+        ...cors,
+        ...rlHeaders,
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     },
   )

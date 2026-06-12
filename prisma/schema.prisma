@@ -103,6 +103,7 @@ model Client {
   city      String?
   notes     String?
   source    String   @default("manual") // "landing" | "phone" | "manual" | "referral"
+  category  String   @default("CONTACT") // "CONTACT" | "CLIENT"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
