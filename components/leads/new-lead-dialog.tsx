@@ -70,9 +70,15 @@ export function NewLeadDialog() {
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <Label htmlFor="lead-email" className="text-xs">Email</Label>
-            <Input id="lead-email" name="email" type="email" className="h-8 text-sm" placeholder="you@example.com" />
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="lead-email" className="text-xs">Email</Label>
+              <Input id="lead-email" name="email" type="email" className="h-8 text-sm" placeholder="you@example.com" />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="lead-city" className="text-xs">Ciudad</Label>
+              <Input id="lead-city" name="city" className="h-8 text-sm" placeholder="Miami" />
+            </div>
           </div>
 
           <div className="space-y-1.5">

@@ -21,6 +21,8 @@ export interface ServiceRecordData {
   equipmentModel: string | null
   amount: number | null
   notes: string | null
+  scheduledTime?: string | null
+  address?: string | null
 }
 
 export function ServiceRecordActions({ record }: { record: ServiceRecordData }) {
@@ -88,6 +90,8 @@ export function ServiceRecordActions({ record }: { record: ServiceRecordData }) 
                 equipmentModel: record.equipmentModel,
                 amount:         record.amount,
                 notes:          record.notes,
+                scheduledTime:  record.scheduledTime,
+                address:        record.address,
               }}
             />
             <div className="flex justify-end gap-2 pt-1">

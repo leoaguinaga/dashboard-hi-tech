@@ -13,6 +13,7 @@ import {
   LayoutList,
   Inbox,
   Wrench,
+  Calendar,
 } from "lucide-react";
 
 type NavItem = { name: string; href: string; icon: React.ElementType }
@@ -33,6 +34,7 @@ const NAV: NavGroup[] = [
     label: "CRM",
     items: [
       { name: "Panel CRM",    href: "/crm",             icon: LayoutList },
+      { name: "Calendario",   href: "/crm/calendario",  icon: Calendar },
       { name: "Clientes",     href: "/crm/clientes",    icon: Users },
       { name: "Servicios",    href: "/services",         icon: Wrench },
       { name: "Seguimientos", href: "/crm/seguimientos", icon: History },

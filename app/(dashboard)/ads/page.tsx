@@ -143,7 +143,7 @@ export default async function AdsPage({ searchParams }: Props) {
       {connected === "1" && (
         <div className="rounded-md bg-success/10 border border-success/20 px-3 py-2 text-xs text-success flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
-          Cuenta de Google Ads conectada correctamente. Pulsa "Sincronizar ahora" para cargar los datos.
+          Cuenta de Google Ads conectada correctamente. Pulsa &quot;Sincronizar ahora&quot; para cargar los datos.
         </div>
       )}
       {error && (
@@ -273,7 +273,7 @@ export default async function AdsPage({ searchParams }: Props) {
               <Zap className="h-8 w-8 mx-auto mb-2 text-app-muted/40" />
               <p className="text-sm font-medium text-app-primary">Sin datos sincronizados</p>
               <p className="text-xs text-app-muted mt-1">
-                Pulsa "Sincronizar ahora" para importar los datos de tus campañas.
+                Pulsa &quot;Sincronizar ahora&quot; para importar los datos de tus campañas.
               </p>
               <div className="mt-4">
                 <SyncButton />

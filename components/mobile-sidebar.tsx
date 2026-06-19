@@ -13,11 +13,17 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export function MobileSidebar({ user }: { user: { name: string; email: string; role: string } }) {
+export function MobileSidebar({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  user,
+}: {
+  user: { name: string; email: string; role: string }
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 

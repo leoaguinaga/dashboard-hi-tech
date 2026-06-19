@@ -6,6 +6,14 @@ import { Textarea } from "@/components/ui/textarea"
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select"
+import { useState } from "react"
+import { format } from "date-fns"
+import { es } from "date-fns/locale"
+import { CalendarIcon } from "lucide-react"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 
 export interface ServiceRecordDefaults {
   type?: string
@@ -17,6 +25,8 @@ export interface ServiceRecordDefaults {
   amount?: number | null
   followUpDays?: number
   notes?: string | null
+  scheduledTime?: string | null
+  address?: string | null
 }
 
 interface Props {
@@ -35,7 +45,28 @@ interface Props {
 export function ServiceRecordFields({
   type, setType, status, setStatus, payment, setPayment, defaults, showFollowUp = true,
 }: Props) {
-  const today = new Date().toISOString().split("T")[0]
+  const [date, setDate] = useState<Date | undefined>(() => {
+    if (defaults?.serviceDate) {
+      // Parse YYYY-MM-DD as local date to avoid timezone offset shifts
+      const [year, month, day] = defaults.serviceDate.split("-").map(Number)
+      return new Date(year, month - 1, day)
+    }
+    return new Date()
+  })
+
+  const [hour, setHour] = useState(() => {
+    if (defaults?.scheduledTime) {
+      return defaults.scheduledTime.split(":")[0]
+    }
+    return "12"
+  })
+
+  const [minute, setMinute] = useState(() => {
+    if (defaults?.scheduledTime) {
+      return defaults.scheduledTime.split(":")[1]
+    }
+    return "00"
+  })
 
   return (
     <>
@@ -70,12 +101,76 @@ export function ServiceRecordFields({
         </div>
       </div>
 
-      {/* Fecha */}
+      {/* Fecha + Hora */}
+      <div className="grid grid-cols-2 gap-2">
+        <div className="space-y-1 flex flex-col justify-end">
+          <Label className="text-xs mb-1">Fecha del servicio *</Label>
+          <Popover>
+            <PopoverTrigger
+              render={
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={cn(
+                    "w-full h-8 justify-start text-left font-normal text-xs px-2.5 bg-bg-subtle border-border focus:bg-bg-base",
+                    !date && "text-app-muted"
+                  )}
+                />
+              }
+            >
+              <CalendarIcon className="mr-1.5 h-3.5 w-3.5 text-app-muted" />
+              {date ? format(date, "PPP", { locale: es }) : <span>Seleccionar...</span>}
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 z-50 bg-bg-base border border-border" align="start">
+              <Calendar
+                mode="single"
+                selected={date}
+                onSelect={setDate}
+                locale={es}
+              />
+            </PopoverContent>
+          </Popover>
+          <input type="hidden" name="serviceDate" value={date ? format(date, "yyyy-MM-dd") : ""} />
+        </div>
+
+        <div className="space-y-1 flex flex-col justify-end">
+          <Label className="text-xs mb-1">Hora (Cita)</Label>
+          <div className="flex items-center gap-1">
+            <Select value={hour} onValueChange={(val) => setHour(val ?? "12")}>
+              <SelectTrigger className="h-8 text-xs flex-1 bg-bg-subtle border-border">
+                <SelectValue placeholder="HH" />
+              </SelectTrigger>
+              <SelectContent>
+                {Array.from({ length: 24 }).map((_, i) => {
+                  const h = String(i).padStart(2, "0")
+                  return <SelectItem key={h} value={h}>{h}</SelectItem>
+                })}
+              </SelectContent>
+            </Select>
+            <span className="text-xs font-semibold text-app-muted">:</span>
+            <Select value={minute} onValueChange={(val) => setMinute(val ?? "00")}>
+              <SelectTrigger className="h-8 text-xs flex-1 bg-bg-subtle border-border">
+                <SelectValue placeholder="MM" />
+              </SelectTrigger>
+              <SelectContent>
+                {["00", "05", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55"].map((m) => (
+                  <SelectItem key={m} value={m}>{m}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <input type="hidden" name="scheduledTime" value={`${hour}:${minute}`} />
+        </div>
+      </div>
+
+      {/* Dirección */}
       <div className="space-y-1">
-        <Label htmlFor="serviceDate" className="text-xs">Fecha del servicio *</Label>
+        <Label htmlFor="address" className="text-xs">Dirección del servicio</Label>
         <Input
-          id="serviceDate" name="serviceDate" type="date"
-          defaultValue={defaults?.serviceDate ?? today} required className="h-8 text-sm"
+          id="address" name="address"
+          defaultValue={defaults?.address ?? ""}
+          placeholder="Ej: Av. Principal 123 (vacío para usar dirección del cliente)"
+          className="h-8 text-sm"
         />
       </div>
 

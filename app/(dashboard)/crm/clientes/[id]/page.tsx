@@ -188,7 +188,7 @@ export default async function ClientProfilePage({ params }: Props) {
               <div className="px-4 py-10 text-center">
                 <p className="text-xs text-app-muted">Sin servicios registrados.</p>
                 <p className="text-[10px] text-app-muted mt-1">
-                  Usa el botón "Agregar servicio" para registrar el primer servicio.
+                  Usa el botón &quot;Agregar servicio&quot; para registrar el primer servicio.
                 </p>
               </div>
             ) : (

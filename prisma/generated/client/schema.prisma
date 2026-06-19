@@ -132,6 +132,8 @@ model ServiceRecord {
   notes          String?
   amount         Float? // costo del servicio (opcional)
   paymentStatus  String   @default("PAID") // "PAID" | "PENDING"  — estado de cobro
+  scheduledTime  String? // hora del servicio (ej: "14:30")
+  address        String? // dirección específica del servicio
   followUpDays   Int      @default(180)
   followUpDate   DateTime
   createdAt      DateTime @default(now())
@@ -213,6 +215,7 @@ model Lead {
   email     String?
   service   String // matches Service.label from lib/services.ts
   message   String?
+  city      String? // ciudad del servicio solicitado
   status    String   @default("NEW") // "NEW" | "CONTACTED" | "QUOTED" | "WON" | "LOST"
   source    String   @default("landing") // "landing" | "phone" | "manual"
   createdAt DateTime @default(now())

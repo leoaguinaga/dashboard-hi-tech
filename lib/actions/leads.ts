@@ -25,22 +25,26 @@ export async function createLeadManual(formData: FormData) {
   const email   = (formData.get("email")   as string)?.trim() || null
   const service = (formData.get("service") as string).trim()
   const message = (formData.get("message") as string)?.trim() || null
+  const city    = (formData.get("city")    as string)?.trim() || null
 
   const lead = await prisma.lead.create({
-    data: { name, phone, email, service, message, source: "manual" },
+    data: { name, phone, email, service, message, city, source: "manual" },
   })
 
   const existing = await prisma.client.findFirst({ where: { phone } })
   if (existing) {
-    if (!existing.leadId) {
+    if (!existing.leadId || !existing.city) {
       await prisma.client.update({
         where: { id: existing.id },
-        data:  { leadId: lead.id },
+        data:  {
+          leadId: existing.leadId ? undefined : lead.id,
+          city: existing.city ? undefined : city,
+        },
       })
     }
   } else {
     await prisma.client.create({
-      data: { name, phone, email, source: "manual", category: "CONTACT", leadId: lead.id },
+      data: { name, phone, email, source: "manual", category: "CONTACT", leadId: lead.id, city },
     })
   }
 
@@ -61,12 +65,13 @@ export async function convertLeadToClient(leadId: string) {
   if (lead.client) {
     // Ya hay un Client vinculado (probablemente como CONTACT) — promover a CLIENT.
     clientId = lead.client.id
-    if (lead.client.category !== "CLIENT") {
-      await prisma.client.update({
-        where: { id: clientId },
-        data:  { category: "CLIENT" },
-      })
-    }
+    await prisma.client.update({
+      where: { id: clientId },
+      data:  {
+        category: "CLIENT",
+        city: lead.city || undefined,
+      },
+    })
   } else {
     // Por si el lead se creó antes de que existiera el auto-contacto.
     const existing = await prisma.client.findFirst({ where: { phone: lead.phone } })
@@ -74,7 +79,11 @@ export async function convertLeadToClient(leadId: string) {
       clientId = existing.id
       await prisma.client.update({
         where: { id: existing.id },
-        data:  { category: "CLIENT", leadId: lead.id },
+        data:  {
+          category: "CLIENT",
+          leadId: lead.id,
+          city: existing.city || lead.city || undefined,
+        },
       })
     } else {
       const created = await prisma.client.create({
@@ -85,6 +94,7 @@ export async function convertLeadToClient(leadId: string) {
           source:   lead.source,
           category: "CLIENT",
           leadId:   lead.id,
+          city:     lead.city,
         },
       })
       clientId = created.id

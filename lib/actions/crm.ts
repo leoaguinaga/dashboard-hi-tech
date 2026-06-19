@@ -64,11 +64,27 @@ export async function createServiceRecord(formData: FormData) {
   const notes          = (formData.get("notes")          as string)?.trim() || null
   const amountRaw      = formData.get("amount") as string | null
   const amount         = amountRaw ? parseFloat(amountRaw) : null
+  const scheduledTime  = (formData.get("scheduledTime")  as string)?.trim() || null
+  const address        = (formData.get("address")        as string)?.trim() || null
   const followUpDays   = Math.max(1, parseInt(formData.get("followUpDays") as string) || 180)
   const followUpDate   = addDays(serviceDate, followUpDays)
 
   const record = await prisma.serviceRecord.create({
-    data: { clientId, type, status, paymentStatus, serviceDate, equipmentBrand, equipmentModel, notes, amount, followUpDays, followUpDate },
+    data: {
+      clientId,
+      type,
+      status,
+      paymentStatus,
+      serviceDate,
+      equipmentBrand,
+      equipmentModel,
+      notes,
+      amount,
+      scheduledTime,
+      address,
+      followUpDays,
+      followUpDate,
+    },
   })
 
   const label = [equipmentBrand, equipmentModel].filter(Boolean).join(" ")
@@ -96,10 +112,12 @@ export async function updateServiceRecord(id: string, formData: FormData) {
   const notes          = (formData.get("notes")          as string)?.trim() || null
   const amountRaw      = formData.get("amount") as string | null
   const amount         = amountRaw ? parseFloat(amountRaw) : null
+  const scheduledTime  = (formData.get("scheduledTime")  as string)?.trim() || null
+  const address        = (formData.get("address")        as string)?.trim() || null
 
   const record = await prisma.serviceRecord.update({
     where: { id },
-    data:  { type, status, paymentStatus, serviceDate, equipmentBrand, equipmentModel, notes, amount },
+    data:  { type, status, paymentStatus, serviceDate, equipmentBrand, equipmentModel, notes, amount, scheduledTime, address },
   })
 
   revalidateCRM(record.clientId)

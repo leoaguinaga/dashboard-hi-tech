@@ -9177,6 +9177,8 @@ export namespace Prisma {
     notes: string | null
     amount: number | null
     paymentStatus: string | null
+    scheduledTime: string | null
+    address: string | null
     followUpDays: number | null
     followUpDate: Date | null
     createdAt: Date | null
@@ -9194,6 +9196,8 @@ export namespace Prisma {
     notes: string | null
     amount: number | null
     paymentStatus: string | null
+    scheduledTime: string | null
+    address: string | null
     followUpDays: number | null
     followUpDate: Date | null
     createdAt: Date | null
@@ -9211,6 +9215,8 @@ export namespace Prisma {
     notes: number
     amount: number
     paymentStatus: number
+    scheduledTime: number
+    address: number
     followUpDays: number
     followUpDate: number
     createdAt: number
@@ -9240,6 +9246,8 @@ export namespace Prisma {
     notes?: true
     amount?: true
     paymentStatus?: true
+    scheduledTime?: true
+    address?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9257,6 +9265,8 @@ export namespace Prisma {
     notes?: true
     amount?: true
     paymentStatus?: true
+    scheduledTime?: true
+    address?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9274,6 +9284,8 @@ export namespace Prisma {
     notes?: true
     amount?: true
     paymentStatus?: true
+    scheduledTime?: true
+    address?: true
     followUpDays?: true
     followUpDate?: true
     createdAt?: true
@@ -9378,6 +9390,8 @@ export namespace Prisma {
     notes: string | null
     amount: number | null
     paymentStatus: string
+    scheduledTime: string | null
+    address: string | null
     followUpDays: number
     followUpDate: Date
     createdAt: Date
@@ -9414,6 +9428,8 @@ export namespace Prisma {
     notes?: boolean
     amount?: boolean
     paymentStatus?: boolean
+    scheduledTime?: boolean
+    address?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9435,6 +9451,8 @@ export namespace Prisma {
     notes?: boolean
     amount?: boolean
     paymentStatus?: boolean
+    scheduledTime?: boolean
+    address?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9453,6 +9471,8 @@ export namespace Prisma {
     notes?: boolean
     amount?: boolean
     paymentStatus?: boolean
+    scheduledTime?: boolean
+    address?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
@@ -9471,13 +9491,15 @@ export namespace Prisma {
     notes?: boolean
     amount?: boolean
     paymentStatus?: boolean
+    scheduledTime?: boolean
+    address?: boolean
     followUpDays?: boolean
     followUpDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ServiceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "type" | "status" | "serviceDate" | "equipmentBrand" | "equipmentModel" | "notes" | "amount" | "paymentStatus" | "followUpDays" | "followUpDate" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRecord"]>
+  export type ServiceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clientId" | "type" | "status" | "serviceDate" | "equipmentBrand" | "equipmentModel" | "notes" | "amount" | "paymentStatus" | "scheduledTime" | "address" | "followUpDays" | "followUpDate" | "createdAt" | "updatedAt", ExtArgs["result"]["serviceRecord"]>
   export type ServiceRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | ClientDefaultArgs<ExtArgs>
     reminders?: boolean | ServiceRecord$remindersArgs<ExtArgs>
@@ -9509,6 +9531,8 @@ export namespace Prisma {
       notes: string | null
       amount: number | null
       paymentStatus: string
+      scheduledTime: string | null
+      address: string | null
       followUpDays: number
       followUpDate: Date
       createdAt: Date
@@ -9949,6 +9973,8 @@ export namespace Prisma {
     readonly notes: FieldRef<"ServiceRecord", 'String'>
     readonly amount: FieldRef<"ServiceRecord", 'Float'>
     readonly paymentStatus: FieldRef<"ServiceRecord", 'String'>
+    readonly scheduledTime: FieldRef<"ServiceRecord", 'String'>
+    readonly address: FieldRef<"ServiceRecord", 'String'>
     readonly followUpDays: FieldRef<"ServiceRecord", 'Int'>
     readonly followUpDate: FieldRef<"ServiceRecord", 'DateTime'>
     readonly createdAt: FieldRef<"ServiceRecord", 'DateTime'>
@@ -15847,6 +15873,7 @@ export namespace Prisma {
     email: string | null
     service: string | null
     message: string | null
+    city: string | null
     status: string | null
     source: string | null
     createdAt: Date | null
@@ -15860,6 +15887,7 @@ export namespace Prisma {
     email: string | null
     service: string | null
     message: string | null
+    city: string | null
     status: string | null
     source: string | null
     createdAt: Date | null
@@ -15873,6 +15901,7 @@ export namespace Prisma {
     email: number
     service: number
     message: number
+    city: number
     status: number
     source: number
     createdAt: number
@@ -15888,6 +15917,7 @@ export namespace Prisma {
     email?: true
     service?: true
     message?: true
+    city?: true
     status?: true
     source?: true
     createdAt?: true
@@ -15901,6 +15931,7 @@ export namespace Prisma {
     email?: true
     service?: true
     message?: true
+    city?: true
     status?: true
     source?: true
     createdAt?: true
@@ -15914,6 +15945,7 @@ export namespace Prisma {
     email?: true
     service?: true
     message?: true
+    city?: true
     status?: true
     source?: true
     createdAt?: true
@@ -16000,6 +16032,7 @@ export namespace Prisma {
     email: string | null
     service: string
     message: string | null
+    city: string | null
     status: string
     source: string
     createdAt: Date
@@ -16030,6 +16063,7 @@ export namespace Prisma {
     email?: boolean
     service?: boolean
     message?: boolean
+    city?: boolean
     status?: boolean
     source?: boolean
     createdAt?: boolean
@@ -16044,6 +16078,7 @@ export namespace Prisma {
     email?: boolean
     service?: boolean
     message?: boolean
+    city?: boolean
     status?: boolean
     source?: boolean
     createdAt?: boolean
@@ -16057,6 +16092,7 @@ export namespace Prisma {
     email?: boolean
     service?: boolean
     message?: boolean
+    city?: boolean
     status?: boolean
     source?: boolean
     createdAt?: boolean
@@ -16070,13 +16106,14 @@ export namespace Prisma {
     email?: boolean
     service?: boolean
     message?: boolean
+    city?: boolean
     status?: boolean
     source?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "service" | "message" | "status" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
+  export type LeadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "service" | "message" | "city" | "status" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["lead"]>
   export type LeadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     client?: boolean | Lead$clientArgs<ExtArgs>
   }
@@ -16095,6 +16132,7 @@ export namespace Prisma {
       email: string | null
       service: string
       message: string | null
+      city: string | null
       status: string
       source: string
       createdAt: Date
@@ -16529,6 +16567,7 @@ export namespace Prisma {
     readonly email: FieldRef<"Lead", 'String'>
     readonly service: FieldRef<"Lead", 'String'>
     readonly message: FieldRef<"Lead", 'String'>
+    readonly city: FieldRef<"Lead", 'String'>
     readonly status: FieldRef<"Lead", 'String'>
     readonly source: FieldRef<"Lead", 'String'>
     readonly createdAt: FieldRef<"Lead", 'DateTime'>
@@ -17089,6 +17128,8 @@ export namespace Prisma {
     notes: 'notes',
     amount: 'amount',
     paymentStatus: 'paymentStatus',
+    scheduledTime: 'scheduledTime',
+    address: 'address',
     followUpDays: 'followUpDays',
     followUpDate: 'followUpDate',
     createdAt: 'createdAt',
@@ -17166,6 +17207,7 @@ export namespace Prisma {
     email: 'email',
     service: 'service',
     message: 'message',
+    city: 'city',
     status: 'status',
     source: 'source',
     createdAt: 'createdAt',
@@ -17806,6 +17848,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
     paymentStatus?: StringFilter<"ServiceRecord"> | string
+    scheduledTime?: StringNullableFilter<"ServiceRecord"> | string | null
+    address?: StringNullableFilter<"ServiceRecord"> | string | null
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -17826,6 +17870,8 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     amount?: SortOrderInput | SortOrder
     paymentStatus?: SortOrder
+    scheduledTime?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -17849,6 +17895,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
     paymentStatus?: StringFilter<"ServiceRecord"> | string
+    scheduledTime?: StringNullableFilter<"ServiceRecord"> | string | null
+    address?: StringNullableFilter<"ServiceRecord"> | string | null
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -17869,6 +17917,8 @@ export namespace Prisma {
     notes?: SortOrderInput | SortOrder
     amount?: SortOrderInput | SortOrder
     paymentStatus?: SortOrder
+    scheduledTime?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -17894,6 +17944,8 @@ export namespace Prisma {
     notes?: StringNullableWithAggregatesFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableWithAggregatesFilter<"ServiceRecord"> | number | null
     paymentStatus?: StringWithAggregatesFilter<"ServiceRecord"> | string
+    scheduledTime?: StringNullableWithAggregatesFilter<"ServiceRecord"> | string | null
+    address?: StringNullableWithAggregatesFilter<"ServiceRecord"> | string | null
     followUpDays?: IntWithAggregatesFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeWithAggregatesFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeWithAggregatesFilter<"ServiceRecord"> | Date | string
@@ -18218,6 +18270,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"Lead"> | string | null
     service?: StringFilter<"Lead"> | string
     message?: StringNullableFilter<"Lead"> | string | null
+    city?: StringNullableFilter<"Lead"> | string | null
     status?: StringFilter<"Lead"> | string
     source?: StringFilter<"Lead"> | string
     createdAt?: DateTimeFilter<"Lead"> | Date | string
@@ -18232,6 +18285,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     service?: SortOrder
     message?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
     status?: SortOrder
     source?: SortOrder
     createdAt?: SortOrder
@@ -18249,6 +18303,7 @@ export namespace Prisma {
     email?: StringNullableFilter<"Lead"> | string | null
     service?: StringFilter<"Lead"> | string
     message?: StringNullableFilter<"Lead"> | string | null
+    city?: StringNullableFilter<"Lead"> | string | null
     status?: StringFilter<"Lead"> | string
     source?: StringFilter<"Lead"> | string
     createdAt?: DateTimeFilter<"Lead"> | Date | string
@@ -18263,6 +18318,7 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     service?: SortOrder
     message?: SortOrderInput | SortOrder
+    city?: SortOrderInput | SortOrder
     status?: SortOrder
     source?: SortOrder
     createdAt?: SortOrder
@@ -18282,6 +18338,7 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     service?: StringWithAggregatesFilter<"Lead"> | string
     message?: StringNullableWithAggregatesFilter<"Lead"> | string | null
+    city?: StringNullableWithAggregatesFilter<"Lead"> | string | null
     status?: StringWithAggregatesFilter<"Lead"> | string
     source?: StringWithAggregatesFilter<"Lead"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Lead"> | Date | string
@@ -18898,6 +18955,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -18918,6 +18977,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -18936,6 +18997,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18956,6 +19019,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18975,6 +19040,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -18991,6 +19058,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19008,6 +19077,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19343,6 +19414,7 @@ export namespace Prisma {
     email?: string | null
     service: string
     message?: string | null
+    city?: string | null
     status?: string
     source?: string
     createdAt?: Date | string
@@ -19357,6 +19429,7 @@ export namespace Prisma {
     email?: string | null
     service: string
     message?: string | null
+    city?: string | null
     status?: string
     source?: string
     createdAt?: Date | string
@@ -19371,6 +19444,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19385,6 +19459,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19399,6 +19474,7 @@ export namespace Prisma {
     email?: string | null
     service: string
     message?: string | null
+    city?: string | null
     status?: string
     source?: string
     createdAt?: Date | string
@@ -19412,6 +19488,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19425,6 +19502,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19990,6 +20068,8 @@ export namespace Prisma {
     notes?: SortOrder
     amount?: SortOrder
     paymentStatus?: SortOrder
+    scheduledTime?: SortOrder
+    address?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -20012,6 +20092,8 @@ export namespace Prisma {
     notes?: SortOrder
     amount?: SortOrder
     paymentStatus?: SortOrder
+    scheduledTime?: SortOrder
+    address?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -20029,6 +20111,8 @@ export namespace Prisma {
     notes?: SortOrder
     amount?: SortOrder
     paymentStatus?: SortOrder
+    scheduledTime?: SortOrder
+    address?: SortOrder
     followUpDays?: SortOrder
     followUpDate?: SortOrder
     createdAt?: SortOrder
@@ -20262,6 +20346,7 @@ export namespace Prisma {
     email?: SortOrder
     service?: SortOrder
     message?: SortOrder
+    city?: SortOrder
     status?: SortOrder
     source?: SortOrder
     createdAt?: SortOrder
@@ -20275,6 +20360,7 @@ export namespace Prisma {
     email?: SortOrder
     service?: SortOrder
     message?: SortOrder
+    city?: SortOrder
     status?: SortOrder
     source?: SortOrder
     createdAt?: SortOrder
@@ -20288,6 +20374,7 @@ export namespace Prisma {
     email?: SortOrder
     service?: SortOrder
     message?: SortOrder
+    city?: SortOrder
     status?: SortOrder
     source?: SortOrder
     createdAt?: SortOrder
@@ -21441,6 +21528,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -21460,6 +21549,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -21540,6 +21631,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21559,6 +21652,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21573,6 +21668,7 @@ export namespace Prisma {
     email?: string | null
     service: string
     message?: string | null
+    city?: string | null
     status?: string
     source?: string
     createdAt?: Date | string
@@ -21586,6 +21682,7 @@ export namespace Prisma {
     email?: string | null
     service: string
     message?: string | null
+    city?: string | null
     status?: string
     source?: string
     createdAt?: Date | string
@@ -21657,6 +21754,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -21675,6 +21774,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -21763,6 +21864,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21776,6 +21878,7 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     service?: StringFieldUpdateOperationsInput | string
     message?: NullableStringFieldUpdateOperationsInput | string | null
+    city?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21852,6 +21955,8 @@ export namespace Prisma {
     notes?: StringNullableFilter<"ServiceRecord"> | string | null
     amount?: FloatNullableFilter<"ServiceRecord"> | number | null
     paymentStatus?: StringFilter<"ServiceRecord"> | string
+    scheduledTime?: StringNullableFilter<"ServiceRecord"> | string | null
+    address?: StringNullableFilter<"ServiceRecord"> | string | null
     followUpDays?: IntFilter<"ServiceRecord"> | number
     followUpDate?: DateTimeFilter<"ServiceRecord"> | Date | string
     createdAt?: DateTimeFilter<"ServiceRecord"> | Date | string
@@ -22193,6 +22298,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -22212,6 +22319,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -22292,6 +22401,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22311,6 +22422,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22733,6 +22846,8 @@ export namespace Prisma {
     notes?: string | null
     amount?: number | null
     paymentStatus?: string
+    scheduledTime?: string | null
+    address?: string | null
     followUpDays?: number
     followUpDate: Date | string
     createdAt?: Date | string
@@ -22825,6 +22940,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22843,6 +22960,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22861,6 +22980,8 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     amount?: NullableFloatFieldUpdateOperationsInput | number | null
     paymentStatus?: StringFieldUpdateOperationsInput | string
+    scheduledTime?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
     followUpDays?: IntFieldUpdateOperationsInput | number
     followUpDate?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
